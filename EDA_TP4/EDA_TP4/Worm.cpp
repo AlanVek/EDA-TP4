@@ -11,7 +11,7 @@
 #define MAXX 1212
 
 
-/*#define INITIALYSPEED (FROM FORMULA)*/
+#define INITIALYSPEED (sin(M_PI/3)*4.5 - 1/2 * 0.24 * 100)/10
 /*Worm constructor. Sets variables to initial values.*/
 Worm::Worm() {
 	isMoving = false;
@@ -24,7 +24,7 @@ Worm::Worm() {
 
 	xPos = rand() % (MAXX - MINX + 1) + MINX;
 	yPos = STARTINGY;
-	/*ySpeed = INITIALYSPEED*/ ;
+	ySpeed = INITIALYSPEED ;
 
 	jumpKey = NULL;
 	for (int i = 0; i < MAXKEYS; i++)
@@ -159,7 +159,7 @@ void Worm::updateStep(void) {
 	else if (isJumping) {
 
 		/*If jump has finished, it resets stepCountMove and isJumping.*/
-		if (stepCountJump == YYY) {
+		if (stepCountJump == 10) {
 			isJumping = isJumpPressed;
 			stepCountJump = 0;
 			/*ySpeed = INITIALYSPEED*/
@@ -167,7 +167,7 @@ void Worm::updateStep(void) {
 
 		/*If worm has to move, then it updates xPos, yPos, ySpeed and stepCountJump. */
 		else {
-			xPos += direction * cos(M_PI / 3) * MODULE /* /FRAMES*/;
+			xPos += direction * cos(M_PI / 3) * MODULE /10;
 			yPos += direction * ySpeed;
 			ySpeed -= GRAVITY;
 			stepCountJump++;
