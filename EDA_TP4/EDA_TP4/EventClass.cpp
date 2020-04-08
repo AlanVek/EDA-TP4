@@ -34,9 +34,11 @@ bool EventClass::dispatch(void* thisSim) {
 		break;
 	case ALLEGRO_EVENT_KEY_UP:
 		simPtr->stopMoving(Event.keyboard.keycode);
+		result = true;
 		break;
 	case ALLEGRO_EVENT_TIMER:
 		simPtr->refresh();
+		result = true;
 		break;
 	default:
 		break;

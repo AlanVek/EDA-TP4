@@ -10,21 +10,22 @@ public:
 
 	int checkKeyCode (int keyCode);
 
-	void jump(void);
-	void walk(void);
-
 	void stop(int keyCode, int whichMove);
 
 	float getXPos(void);
 	float getYPos(void);
-	int getStep(void);
-	bool updateStep(void);
+	int getStepMove(void);
+	int getStepJump(void);
+	void updateStep(void);
+
+	bool getMovementState(void);
+	bool getJumpState(void);
 
 	void start(int keyCode, int whichMove);
 
 private:
-	bool isMoving;
-	int stepCount;
+	bool isMoving, isJumping;
+	int stepCountMove, stepCountJump;
 	int numJumpKeys, numMoveKeys;
 	int jumpKeys[MAXKEYS];
 	int moveKeys[MAXKEYS];

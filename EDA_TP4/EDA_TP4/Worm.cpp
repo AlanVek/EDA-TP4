@@ -5,7 +5,9 @@
 /*Worm constructor. Sets variables to initial values.*/
 Worm::Worm() {
 	isMoving = false;
-	stepCount = 0;
+	isJumping = false;
+	stepCountMove = 0;
+	stepCountJump = 0;
 	xPos = 100;
 	yPos = STARTINGY;
 };
@@ -41,39 +43,45 @@ int Worm::checkKeyCode(int keyCode) {
 	return 0;
 }
 
-/*If it has to start a jump, it jumps. Otherwise, if it has
-to move, it sets isMoving to true, so that refresh can later update stepCount.*/
+/*Sets isMoving/isJumping to true (if user pressed to move or jump,
+respectively). */
 void Worm::start(int keyCode, int whichMove) {
 
 	if (whichMove == 1)
-		jump();
+		isJumping = true;
 
-	isMoving = true;
+	else
+		isMoving = true;
 }
 
-/*Sets isMoving to false, and resets stepCount to 0.*/
+/*Sets isMoving/isJumping to false, and resets corresponding stepCount to 0.*/
 void Worm::stop(int keyCode, int whichMove) {
 	if (whichMove == -1) {
 		isMoving = false;
-		stepCount = 0;
+		stepCountMove = 0;
+	}
+	else {
+		isJumping = false;
+		stepCountJump = 0;
 	}
 }
 
 /*Class getters.*/
 float Worm::getXPos(void) { return xPos; }
 float Worm::getYPos(void) { return yPos; }
-int Worm::getStep(void) { return stepCount; }
+int Worm::getStepMove(void) { return stepCountMove; }
+int Worm::getStepJump(void) { return stepCountJump; }
+bool Worm::getMovementState(void) { return isMoving; }
+bool Worm::getJumpState(void) { return isJumping; }
 
-/*If the worm was moving, it updates the stepCount and returns true.
-Otherwise, it returns false.*/
-bool Worm::updateStep(void) {
-	if (isMoving) {
-		stepCount++;
-		return true;
-	}
-	return false;
+/*If the worm was moving/jumping, it updates the corresponding stepCount 
+and returns true. Otherwise, it returns false.*/
+void Worm::updateStep(void) {
+
+	if (isMoving)
+		stepCountMove++;
+
+	else if (isJumping)
+		stepCountJump++;
 }
 
-void Worm::jump(void) {
-	//
-}

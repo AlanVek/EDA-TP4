@@ -47,9 +47,17 @@ void GraphicClass::draw(void* whichWorm) {
 
     Worm* wormPtr = (Worm*)whichWorm;
     ALLEGRO_BITMAP* temp;
+    
+    /*State is 0 by default (idle worm state).*/
+    int state = 0;
 
-  
-    int state = wormPtr->getStep();
+    /*If worm is moving, it gets the movement step.*/
+    if (wormPtr->getMovementState())
+        state = wormPtr->getStepMove();
+
+    /*If worm is jumping, it gets the jumping step.*/
+    else if (wormPtr->getJumpState())
+        state = wormPtr->getStepJump();
 
     switch (state) {
         //temp = move/jumpBitmaps[xxx]
