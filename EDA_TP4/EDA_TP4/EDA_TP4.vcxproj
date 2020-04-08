@@ -151,7 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="EDA_TP4.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="EventClass.cpp" />
     <ClCompile Include="GraphicClass.cpp" />
     <ClCompile Include="Worm.cpp" />

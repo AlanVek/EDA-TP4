@@ -10,7 +10,7 @@ public:
 	ALLEGRO_EVENT_QUEUE* getQueue(void);
 	~EventClass();
 	ALLEGRO_EVENT getEvent();
-
+	void dispatch(void*);
 	void emptyQueue(void);
 
 private:

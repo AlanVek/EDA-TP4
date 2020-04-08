@@ -1,5 +1,5 @@
 #include "EventClass.h"
-
+#include "Simulation.h"
 EventClass::EventClass(ALLEGRO_EVENT_QUEUE* Queue_) : Queue(Queue_) {};
 
 //Attempts to create Allegro event queue. Returns false if unsuccessful. 
@@ -21,6 +21,24 @@ int EventClass::getNextEventType() {
 EventClass::~EventClass() {
 	if (Queue) 
 		al_destroy_event_queue(Queue);
+}
+
+void EventClass::dispatch(void* thisSim) {
+	Simulation* simPtr = (Simulation*) thisSim;
+
+	switch (Event.type) {
+	case ALLEGRO_EVENT_KEY_DOWN:
+		simPtr->startMoving();
+		break;
+	case ALLEGRO_EVENT_KEY_UP:
+		simPtr->stopMoving();
+		break;
+	case ALLEGRO_EVENT_TIMER:
+		simPtr->refresh();
+		break;
+	default:
+		break;
+	}
 }
 
 

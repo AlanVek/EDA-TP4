@@ -25,9 +25,17 @@ public:
 
 	GraphicClass* getGraphicControl(void);
 	TimeClass* getTimeControl(void);
-	EventClass* getEventControl(string which);
+	EventClass* getEventControl(void);
 
 	bool initializeAll(void);
+
+	void startMoving(void);
+
+	void stopMoving(void);
+
+	void refresh(void);
+
+	void dispatch(void);
 
 	~Simulation();
 

@@ -119,7 +119,7 @@ bool Simulation::setSimulation(bool displayCreation) {
 //Class getters.
 GraphicClass* Simulation::getGraphicControl(void) { return graphicControl; }
 TimeClass* Simulation::getTimeControl(void) { return timeControl; }
-EventClass* Simulation::getEventControl(std::string which) {return eventControl;}
+EventClass* Simulation::getEventControl(void) {return eventControl;}
 
 //Destructor. Frees memory.
 Simulation::~Simulation() {
@@ -127,4 +127,19 @@ Simulation::~Simulation() {
 	delete graphicControl;
 	delete timeControl;
 	delete eventControl;
+}
+
+void Simulation::dispatch(void) {
+	eventControl->dispatch(this);
+}
+
+
+void Simulation::startMoving(void) {
+
+}
+void Simulation::stopMoving(void) {
+
+}
+void Simulation::refresh(void) {
+
 }

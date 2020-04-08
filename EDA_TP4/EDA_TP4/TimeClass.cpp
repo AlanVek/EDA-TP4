@@ -20,6 +20,3 @@ TimeClass::~TimeClass() {
 	if (Timer) 
 		al_destroy_timer(Timer); 
 }
-
-
-
