@@ -142,7 +142,7 @@ bool Simulation::startMoving(int keyCode) {
 	for (int i = 0; i < wormCount; i++) {
 		checker = wormVector[i]->checkKeyCode(keyCode);
 		if (checker) {
-			wormVector[i]->move(keyCode, checker);
+			wormVector[i]->start(keyCode, checker);
 			return true;
 		}
 	}
@@ -150,10 +150,19 @@ bool Simulation::startMoving(int keyCode) {
 
 }
 void Simulation::stopMoving(int keyCode) {
-
-
+	int checker;
+	for (int i = 0; i < wormCount; i++) {
+		checker = wormVector[i]->checkKeyCode(keyCode);
+		if (checker)
+			wormVector[i]->stop(keyCode, checker);
+	}
 }
 void Simulation::refresh(void) {
+
+	for (int i = 0; i < wormCount; i++) {
+		graphicControl->draw(wormVector[i]);
+		wormVector[i]->updateStep();
+	}
 
 }
 

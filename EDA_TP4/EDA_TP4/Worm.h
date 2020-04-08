@@ -13,7 +13,14 @@ public:
 	void jump(void);
 	void walk(void);
 
-	void move(int keyCode, int whichMove);
+	void stop(int keyCode, int whichMove);
+
+	float getXPos(void);
+	float getYPos(void);
+	int getStep(void);
+	void updateStep(void);
+
+	void start(int keyCode, int whichMove);
 
 private:
 	bool isMoving;
@@ -21,5 +28,6 @@ private:
 	int numJumpKeys, numMoveKeys;
 	int jumpKeys[MAXKEYS];
 	int moveKeys[MAXKEYS];
+	float xPos, yPos;
 };
 

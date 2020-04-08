@@ -1,4 +1,5 @@
 #include "GraphicClass.h"
+#include "Worm.h"
 
 //GraphicClass constructor.
 
@@ -10,7 +11,9 @@ bool GraphicClass::createBitmaps(void) {
     bool result = true;
 
     for (int i = 0; i < BITAMOUNT; i++) {
-        if (!(myBitmaps[i] = al_create_bitmap(width, height)))
+        if (!(moveBitmaps[i] = al_create_bitmap(width, height)))
+            result = false;
+        if (!(jumpBitmaps[i] = al_create_bitmap(width, height)))
             result = false;
     }
 
@@ -30,14 +33,25 @@ ALLEGRO_DISPLAY*& GraphicClass::getDisplay(void) { return display; }
 GraphicClass::~GraphicClass(void) {
     
     for (int i = 0; i < BITAMOUNT; i++) {
-        if (myBitmaps[i])
-            al_destroy_bitmap(myBitmaps[i]);
+        if (moveBitmaps[i])
+            al_destroy_bitmap(moveBitmaps[i]);
+        if (jumpBitmaps[i])
+            al_destroy_bitmap(jumpBitmaps[i]);
     }
     if (display)
         al_destroy_display(display);
 }
-void GraphicClass::draw(ALLEGRO_BITMAP* bit, int xPos, int yPos) {
-    al_draw_bitmap(bit, xPos, yPos, 0);
+void GraphicClass::draw(void* whichWorm) {
+
+    Worm* wormPtr = (Worm*)whichWorm;
+    ALLEGRO_BITMAP* temp;
+
+    int state = wormPtr->getStep();
+
+    switch (state) {
+        //
+    }
+    //al_draw_bitmap(temp, wormPtr->getXPos(), wormPtr->getYPos(), 0);
 }
 
 bool GraphicClass::loadBitmaps(void) {
@@ -49,4 +63,5 @@ bool GraphicClass::loadBitmaps(void) {
     return result;
 
 }
+
 

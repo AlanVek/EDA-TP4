@@ -1,8 +1,12 @@
 #include "Worm.h"
 
+#define STARTINGY 616
+
 Worm::Worm() {
 	isMoving = false;
 	stepCount = 0;
+	xPos = 100;
+	yPos = STARTINGY;
 };
 
 void Worm::setJumpKeys(const int* validEvents_, int amount) {
@@ -31,10 +35,30 @@ int Worm::checkKeyCode(int keyCode) {
 	return 0;
 }
 
-void Worm::move(int keyCode, int whichMove) {
+void Worm::start(int keyCode, int whichMove) {
 
 	if (whichMove == 1)
 		jump();
 
-	walk();
+	isMoving = true;
+}
+
+void Worm::stop(int keyCode, int whichMove) {
+	if (whichMove == -1) {
+		isMoving = false;
+		stepCount = 0;
+	}
+}
+
+float Worm::getXPos(void) { return xPos; }
+float Worm::getYPos(void) { return yPos; }
+int Worm::getStep(void) { return stepCount; }
+
+void Worm::updateStep(void) {
+	if (isMoving)
+		stepCount++;
+}
+
+void Worm::jump(void) {
+	//
 }
