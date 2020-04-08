@@ -1,7 +1,11 @@
+#define _USE_MATH_DEFINES
+
 #include "Worm.h"
 #include <iostream>
+#include <cmath>
 
 #define STARTINGY 616
+#define MODULE 4.5
 
 /*Worm constructor. Sets variables to initial values.*/
 Worm::Worm() {
@@ -17,6 +21,8 @@ Worm::Worm() {
 	jumpKey = NULL;
 	for (int i = 0; i < MAXKEYS; i++)
 		moveKeys[i] = NULL;
+
+	direction = 1;
 };
 
 /* Recieves a key and sets it to jumping key.*/
@@ -48,11 +54,16 @@ int Worm::checkKeyCode(int keyCode) {
 respectively). */
 void Worm::start(int keyCode, int whichMove) {
 
-	if (whichMove == 1)
-		isJumping = true;
+	if (whichMove == -1) {
+		isMoving = true;
+		if (keyCode == *moveKeys)
+			direction = -1;
+		else
+			direction = 1;
+	}
 
 	else
-		isMoving = true;
+		isJumping = true;
 }
 
 /*Sets isMoving/isJumping to false, and resets corresponding stepCount to 0.*/
@@ -78,11 +89,18 @@ bool Worm::getJumpState(void) { return isJumping; }
 /*If the worm was moving/jumping, it updates the corresponding stepCount 
 and returns true. Otherwise, it returns false.*/
 void Worm::updateStep(void) {
-
-	if (isMoving)
+	int XXX = 0, YYY = 0; //Define actual step values for position change.
+	if (isMoving) {
 		stepCountMove++;
+		if (stepCountMove == XXX)
+			xPos += direction * 9;
+	}
 
-	else if (isJumping)
+	else if (isJumping) {
 		stepCountJump++;
+		if (stepCountJump == YYY) {
+			xPos += direction * cos(M_PI / 3) * MODULE;
+			yPos += direction * sin(M_PI / 3) * MODULE;
+		}
+	}
 }
-

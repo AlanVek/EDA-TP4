@@ -30,5 +30,6 @@ private:
 	int jumpKey;
 	int moveKeys[MAXKEYS];
 	float xPos, yPos;
+	int direction;
 };
 

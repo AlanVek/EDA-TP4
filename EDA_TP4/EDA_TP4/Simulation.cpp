@@ -18,6 +18,7 @@ Simulation::Simulation(unsigned int width_, unsigned int height_, double FPS_, i
 
 	for (int i = 0; i < wormCount; i++)
 		wormVector[i] = nullptr;
+
 }
 
 bool Simulation::initializeAll(void) {
