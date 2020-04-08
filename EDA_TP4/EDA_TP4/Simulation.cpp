@@ -136,6 +136,8 @@ bool Simulation::dispatch(void) {
 	return (eventControl->dispatch(this));
 }
 
+/* When a key gets pressed, it checks if it's a key linked to
+any worm's movement. If so, then it tells the worm to start the movement.*/
 bool Simulation::startMoving(int keyCode) {
 
 	int checker;
@@ -149,6 +151,8 @@ bool Simulation::startMoving(int keyCode) {
 	return false;
 
 }
+/*If a key's been released, it checks if it's a key linked to
+any worm's movement. If so, then it tells the worm to stop the movement.*/
 void Simulation::stopMoving(int keyCode) {
 	int checker;
 	for (int i = 0; i < wormCount; i++) {
@@ -157,13 +161,16 @@ void Simulation::stopMoving(int keyCode) {
 			wormVector[i]->stop(keyCode, checker);
 	}
 }
+
+/* When timer does a lap, the image gets refreshed
+and the worms' stepCount gets updated to the next step.*/
 void Simulation::refresh(void) {
 
+	al_clear_to_color(al_map_rgb(255, 255, 255));
 	for (int i = 0; i < wormCount; i++) {
-		graphicControl->draw(wormVector[i]);
 		wormVector[i]->updateStep();
+		graphicControl->draw(wormVector[i]);		
 	}
-
 }
 
 /*Creates wormCount worms in memory and stores them in wormVector.

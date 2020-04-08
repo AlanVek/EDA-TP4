@@ -2,11 +2,11 @@
 #include "Worm.h"
 
 //GraphicClass constructor.
-
 GraphicClass::GraphicClass(unsigned int height_, unsigned int width_) :
     width(width_), height(height_) {};
 
-//Attempts to create display. Returns true if successful. 
+
+//Attempts to create bitmaps. Returns true if successful. 
 bool GraphicClass::createBitmaps(void) {
     bool result = true;
 
@@ -22,7 +22,7 @@ bool GraphicClass::createBitmaps(void) {
 
     return result;
 }
-
+//Attempts to create display. Returns true if successful. 
 bool GraphicClass::createDisplay(void) {
     return (display = al_create_display(width, height));
 }
@@ -41,19 +41,24 @@ GraphicClass::~GraphicClass(void) {
     if (display)
         al_destroy_display(display);
 }
+
+/*Draws every worm in its current position, with its corresponding bitmap.*/
 void GraphicClass::draw(void* whichWorm) {
 
     Worm* wormPtr = (Worm*)whichWorm;
     ALLEGRO_BITMAP* temp;
 
+  
     int state = wormPtr->getStep();
 
     switch (state) {
-        //
+        //temp = move/jumpBitmaps[xxx]
     }
     //al_draw_bitmap(temp, wormPtr->getXPos(), wormPtr->getYPos(), 0);
+ 
 }
 
+/*Loads all bitmaps.*/
 bool GraphicClass::loadBitmaps(void) {
 
     bool result = true;

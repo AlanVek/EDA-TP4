@@ -10,7 +10,7 @@ public:
 	//GraphicClass constructor.
 	GraphicClass(unsigned int height_, unsigned int width_);
 
-	void draw(void*);
+	void draw(void* whichWorm);
 
 	bool createBitmaps(void);
 

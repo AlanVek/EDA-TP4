@@ -18,7 +18,7 @@ public:
 	float getXPos(void);
 	float getYPos(void);
 	int getStep(void);
-	void updateStep(void);
+	bool updateStep(void);
 
 	void start(int keyCode, int whichMove);
 
