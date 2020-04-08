@@ -6,7 +6,8 @@
 
 #define STARTINGY 616
 #define MODULE 4.5
-
+#define GRAVITY 0.24
+/*#define INITIALYSPEED (FROM FORMULA)*/
 /*Worm constructor. Sets variables to initial values.*/
 Worm::Worm() {
 	isMoving = false;
@@ -18,6 +19,7 @@ Worm::Worm() {
 
 	xPos = 100;
 	yPos = STARTINGY;
+	/*ySpeed = INITIALYSPEED*/ ;
 
 	jumpKey = NULL;
 	for (int i = 0; i < MAXKEYS; i++)
@@ -112,7 +114,7 @@ bool Worm::getJumpState(void) { return isJumping; }
 /*If the worm was moving/jumping, it updates the corresponding stepCount 
 and returns true. Otherwise, it returns false.*/
 void Worm::updateStep(void) {
-	int XXX = 0, YYY = 0, ZZZ = 0, WWW = 0; //Define actual step values for position change.
+	int XXX = 0, YYY = 0,WWW = 0; //Define actual step values for position change.
 	
 	/*If worm is moving horizontally...*/
 	if (isMoving) {
@@ -135,21 +137,20 @@ void Worm::updateStep(void) {
 	/*If worm is jumping...*/
 	else if (isJumping) {
 
-		/*If worm has to move, then it updates xPos and yPos.*/
-		if (stepCountJump == YYY) {
-			xPos += direction * cos(M_PI / 3) * MODULE;
-			yPos += direction * sin(M_PI / 3) * MODULE;
-		}
-
 		/*If jump has finished, it resets stepCountMove and isJumping.*/
-		if (stepCountJump == ZZZ) {
+		if (stepCountJump == YYY) {
 			isJumping = isJumpPressed;
 			stepCountJump = 0;
+			/*ySpeed = INITIALYSPEED*/
 		}
-		
-		/*If not, then it increases stepCountJump.*/
-		else
+
+		/*If worm has to move, then it updates xPos, yPos, ySpeed and stepCountJump. */
+		else {
+			xPos += direction * cos(M_PI / 3) * MODULE /* /FRAMES*/;
+			yPos += direction * ySpeed;
+			ySpeed -= GRAVITY;
 			stepCountJump++;
+		}
 
 	}
 }

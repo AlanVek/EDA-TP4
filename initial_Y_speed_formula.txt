@@ -1,0 +1,10 @@
+x = xi + vi * t + 1/2 * a * t^2
+
+sin(60°)*4.5 = vi * FRAMES + 1/2 * 0.24 * FRAMES^2
+
+
+
+Initial ySpeed = (3.8971 - 0.12 * FRAMES^2)/ FRAMES
+
+
+Where FRAMES = amount of jump images.

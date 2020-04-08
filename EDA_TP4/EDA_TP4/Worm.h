@@ -29,7 +29,7 @@ private:
 	//int numJumpKeys, numMoveKeys;
 	int jumpKey;
 	int moveKeys[MAXKEYS];
-	float xPos, yPos;
+	float xPos, yPos, ySpeed;
 	int direction;
 };
 
