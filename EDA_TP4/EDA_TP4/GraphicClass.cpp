@@ -53,7 +53,7 @@ GraphicClass::~GraphicClass(void) {
             al_destroy_bitmap(moveBitmaps[i]);
     }
 
-    for (int i = 0; i < BITAMOUNT; i++) {
+    for (int i = 0; i < BITAMOUNT2; i++) {
         if (jumpBitmaps[i])
             al_destroy_bitmap(jumpBitmaps[i]);
     }
@@ -80,9 +80,11 @@ void GraphicClass::draw(void* whichWorm) {
         state = wormPtr->getStepJump();
 
     switch (state) {
-        //temp = move/jumpBitmaps[xxx]
+    default:
+        temp = moveBitmaps[0];
+        break;
     }
-    //al_draw_bitmap(temp, wormPtr->getXPos(), wormPtr->getYPos(), 0);
+    al_draw_bitmap(temp, wormPtr->getXPos(), wormPtr->getYPos(), 0);
  
 }
 
@@ -91,16 +93,16 @@ bool GraphicClass::loadBitmaps(void) {
 
     bool result = true;
 
-    string name = "wwalking\wwalk-F";
+    string name = "wwalk-F";
     string tempstr;
-    char* tempchar = (char*)malloc(10 * sizeof(char));
+    char* tempchar = (char*)malloc(15 * sizeof(char));
    
     if (!tempchar)
         return false;
    
     for (int i = 0; i < BITAMOUNT; i++) {
         
-        tempstr = name + to_string(i+1);
+        tempstr = name + to_string(i+1) + ".png";
         
         tempchar = strcpy(tempchar, tempstr.c_str());
        
@@ -108,10 +110,10 @@ bool GraphicClass::loadBitmaps(void) {
             result = false;
     }
 
-    name = "wjump\wjump-F";
+    name = "wjump-F";
 
     for (int i = 0; i < BITAMOUNT2; i++) {
-        tempstr = name + to_string(i + 1);
+        tempstr = name + to_string(i + 1) + ".png";
 
         tempchar = strcpy(tempchar, tempstr.c_str());
 

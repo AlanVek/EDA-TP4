@@ -19,8 +19,8 @@ int main() {
 
 	while (!endOfInput) {
 		if (mySim.getEventControl()->getNextEventType()) {
-			//if (!mySim.dispatch())
-				//endOfInput = true;
+			if (!mySim.dispatch())
+				endOfInput = true;
 		}
 	}
 

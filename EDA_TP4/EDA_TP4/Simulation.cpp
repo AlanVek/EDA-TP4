@@ -119,11 +119,18 @@ bool Simulation::setSimulation(bool displayCreation) {
 		result = false;
 	}
 
+	/*else if (!graphicControl->createBitmaps()) {
+		cout << "Failed to create bitmaps.\n";
+		result = false;
+	}*/
+
 	//Sets event source for timer, mouse, display and keyboard.
 	if (result) {
 		al_register_event_source(eventControl->getQueue(), al_get_timer_event_source(timeControl->getTimer()));
 		al_register_event_source(eventControl->getQueue(), al_get_display_event_source(graphicControl->getDisplay()));
 		al_register_event_source(eventControl->getQueue(), al_get_keyboard_event_source());
+
+		result = graphicControl->createBitmaps();
 	}
 	return result;
 }
@@ -184,6 +191,7 @@ void Simulation::refresh(void) {
 		graphicControl->draw(wormVector[i]);
 		wormVector[i]->updateStep();		
 	}
+	al_flip_display();
 }
 
 /*Creates wormCount worms in memory and stores them in wormVector.
