@@ -85,7 +85,7 @@ void Worm::start(int keyCode, int whichMove) {
 
 /*Sets corresponding key state to false.*/
 void Worm::stop(int keyCode, int whichMove) {
-	int HHH = 0; //Define actual value.
+	int HHH = 3; //Define actual value.
 
 	/*If moving key was released...*/
 	if (whichMove == -1) {
@@ -118,7 +118,7 @@ bool Worm::getJumpState(void) { return isJumping; }
 /*If the worm was moving/jumping, it updates the corresponding stepCount 
 and returns true. Otherwise, it returns false.*/
 void Worm::updateStep(void) {
-	int XXX = 0, YYY = 0,WWW = 0; //Define actual step values for position change.
+	int XXX = 15, YYY = 5,WWW = 50; //Define actual step values for position change.
 	
 	/*If worm is moving horizontally...*/
 	if (isMoving) {
@@ -128,7 +128,7 @@ void Worm::updateStep(void) {
 			xPos += direction * 9;
 
 		/*If movement has finished, it resets stepCountMove and isMoving.*/
-		if (stepCountMove == WWW) {
+		if (stepCountMove == 15) {
 			isMoving = isMovePressed;
 			stepCountMove = 0;
 		}

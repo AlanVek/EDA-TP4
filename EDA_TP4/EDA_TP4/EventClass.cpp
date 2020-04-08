@@ -32,6 +32,10 @@ bool EventClass::dispatch(void* thisSim) {
 	case ALLEGRO_EVENT_KEY_DOWN:
 		result = simPtr->startMoving(Event.keyboard.keycode);
 		break;
+	case ALLEGRO_EVENT_KEY_CHAR:
+		result = simPtr->startMoving(Event.keyboard.keycode);
+		break;
+
 	case ALLEGRO_EVENT_KEY_UP:
 		simPtr->stopMoving(Event.keyboard.keycode);
 		result = true;
@@ -41,6 +45,7 @@ bool EventClass::dispatch(void* thisSim) {
 		result = true;
 		break;
 	default:
+		//cout << ALLEGRO_EVENT_KEY_CHAR << endl;
 		break;
 	}
 
