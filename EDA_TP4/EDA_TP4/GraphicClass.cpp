@@ -5,7 +5,7 @@
 using namespace std;
 
 //GraphicClass constructor.
-GraphicClass::GraphicClass(unsigned int height_, unsigned int width_) :
+GraphicClass::GraphicClass(unsigned int width_, unsigned int height_) :
     width(width_), height(height_) {
     
     for (int i = 0; i < BITAMOUNT; i++)

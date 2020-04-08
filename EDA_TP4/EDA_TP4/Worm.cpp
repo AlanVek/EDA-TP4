@@ -7,6 +7,10 @@
 #define STARTINGY 616
 #define MODULE 4.5
 #define GRAVITY 0.24
+#define MINX 701
+#define MAXX 1212
+
+
 /*#define INITIALYSPEED (FROM FORMULA)*/
 /*Worm constructor. Sets variables to initial values.*/
 Worm::Worm() {
@@ -17,7 +21,7 @@ Worm::Worm() {
 	stepCountMove = 0;
 	stepCountJump = 0;
 
-	xPos = 100;
+	xPos = rand() % (MAXX - MINX + 1) + MINX;
 	yPos = STARTINGY;
 	/*ySpeed = INITIALYSPEED*/ ;
 

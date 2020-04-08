@@ -9,7 +9,7 @@ class GraphicClass {
 public:
 
 	//GraphicClass constructor.
-	GraphicClass(unsigned int height_, unsigned int width_);
+	GraphicClass(unsigned int width_, unsigned int height_);
 
 	void draw(void* whichWorm);
 
