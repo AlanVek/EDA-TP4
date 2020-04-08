@@ -1,9 +1,12 @@
 #pragma once
-#include <vector>
+#include "GraphicClass.h"
 
 class Worm{
 public:
-
 	Worm();
+
+private:
+	bool isMoving;
+	int stepCount;
 };
 

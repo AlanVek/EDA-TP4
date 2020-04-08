@@ -1,3 +1,6 @@
 #include "Worm.h"
 
-Worm::Worm() {};
+Worm::Worm() {
+	isMoving = false;
+	stepCount = 0;
+};
