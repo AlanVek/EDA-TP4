@@ -32,11 +32,14 @@ public:
 
 	bool startMoving(int keyCode);
 
+	bool timer(Worm * wrmptr);
+
 	void stopMoving(int keyCode);
 
 	void refresh(void);
 
 	bool dispatch(void);
+	int keyUp(Worm* wormptr);
 
 	bool initializeWorms(void);
 	~Simulation();

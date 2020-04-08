@@ -1,5 +1,6 @@
 #pragma once
-
+#define CHANGEDIR 1
+#define STOPMOVING 2
 #define MAXKEYS 4
 class Worm{
 public:
@@ -17,6 +18,9 @@ public:
 	int getStepMove(void);
 	int getStepJump(void);
 	void updateStep(void);
+	void setTimer(int);
+	void addTimer(int);
+	int getTimer(void);
 
 	bool getMovementState(void);
 	bool getJumpState(void);
@@ -24,6 +28,7 @@ public:
 	void start(int keyCode, int whichMove);
 
 private:
+	int timer;
 	bool isMoving, isJumping, isJumpPressed, isMovePressed;
 	int stepCountMove, stepCountJump;
 	//int numJumpKeys, numMoveKeys;

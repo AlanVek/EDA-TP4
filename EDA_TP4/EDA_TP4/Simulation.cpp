@@ -164,8 +164,10 @@ bool Simulation::startMoving(int keyCode) {
 	for (int i = 0; i < wormCount; i++) {
 		movementType = wormVector[i]->checkKeyCode(keyCode);
 		if (movementType) {
-			wormVector[i]->start(keyCode, movementType);
-			return true;
+			if(Simulation::timer(wormVector[i])){
+				wormVector[i]->start(keyCode, movementType);
+				return true;
+			}
 		}
 	}
 	return false;
@@ -177,8 +179,21 @@ void Simulation::stopMoving(int keyCode) {
 	int whichMove;
 	for (int i = 0; i < wormCount; i++) {
 		whichMove = wormVector[i]->checkKeyCode(keyCode);
-		if (whichMove)
-			wormVector[i]->stop(keyCode, whichMove);
+		if (whichMove) {
+
+			switch (Simulation::keyUp(wormVector[i])) {
+
+			case CHANGEDIR :
+				wormVector[i]->stop(keyCode, whichMove); // crear funcion que lo de vuelta 
+				break;
+
+			case STOPMOVING :
+				wormVector[i]->stop(keyCode, whichMove);
+				break;
+			default:
+				break;
+			}
+		}
 	}
 }
 
@@ -216,4 +231,38 @@ void Simulation::setDefaultKeys(void) {
 
 	wormVector[1]->setJumpKey(ALLEGRO_KEY_W);
 	wormVector[1]->setMoveKeys(moveKeys2,2);
+}
+
+
+bool Simulation::timer(Worm * wormDirection) {
+
+	Worm* wormptr = wormDirection;
+
+
+	if (wormptr->getTimer() == 0) {
+		timeControl->startTimer();
+	}
+
+	if (wormptr->getTimer() >= 100) {
+		return true;
+	}
+
+	wormptr->addTimer(al_get_timer_count(timeControl->getTimer())) ;
+
+	return false;
+}
+
+int Simulation::keyUp(Worm* wormDirection) {
+
+	Worm* wormptr = wormDirection;
+	int result;
+
+	if (wormptr->getTimer() < 100) {
+		result = CHANGEDIR;
+	}
+	else {
+		result = STOPMOVING;
+	}
+
+	return result;
 }

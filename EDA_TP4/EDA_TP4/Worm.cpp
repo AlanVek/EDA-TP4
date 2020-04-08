@@ -17,6 +17,7 @@ Worm::Worm() {
 	isMoving = false;
 	isJumping = false;
 	isJumpPressed = false;
+	timer = 0;
 
 	stepCountMove = 0;
 	stepCountJump = 0;
@@ -41,6 +42,20 @@ void Worm::setMoveKeys(const int* validEvents_, int amount) {
 	for (int i = 0; i < amount; i++)
 		moveKeys[i] = validEvents_[i];
 }
+// sets timer
+void Worm::setTimer(int MSECS) {
+	timer = MSECS;
+}
+// adds to timer
+void Worm::addTimer(int MSECS) {
+	timer += MSECS;
+}
+// gets timer 
+int Worm::getTimer(void) {
+	return timer;
+}
+
+
 
 /*Checks if the given keyCode is linked to any movement.
 If it's jumping, it returns 1. If it's moving, it returns -1.
@@ -82,6 +97,8 @@ void Worm::start(int keyCode, int whichMove) {
 		}
 	}
 }
+
+
 
 /*Sets corresponding key state to false.*/
 void Worm::stop(int keyCode, int whichMove) {
