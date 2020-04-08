@@ -9,6 +9,8 @@ int main() {
 	int result = 0;
 	bool endOfInput = false;
 
+	srand(time(NULL));
+
 	//First simulation initialization.
 	if (!mySim.initializeAll()) {
 		cout << "Failed to initialize simulation.\n";
@@ -19,8 +21,8 @@ int main() {
 
 	while (!endOfInput) {
 		if (mySim.getEventControl()->getNextEventType()) {
-			//if (!mySim.dispatch())
-				//endOfInput = true;
+			if (!mySim.dispatch())
+				endOfInput = true;
 		}
 	}
 

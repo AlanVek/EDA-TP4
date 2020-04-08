@@ -3,12 +3,13 @@
 #include <allegro5/allegro.h>
 
 #define BITAMOUNT 15
+#define BITAMOUNT2 10
 
 class GraphicClass {
 public:
 
 	//GraphicClass constructor.
-	GraphicClass(unsigned int height_, unsigned int width_);
+	GraphicClass(unsigned int width_, unsigned int height_);
 
 	void draw(void* whichWorm);
 
@@ -25,7 +26,7 @@ public:
 private:
 
 	ALLEGRO_BITMAP* moveBitmaps[BITAMOUNT];
-	ALLEGRO_BITMAP* jumpBitmaps[BITAMOUNT];
+	ALLEGRO_BITMAP* jumpBitmaps[BITAMOUNT2];
 	ALLEGRO_DISPLAY* display;
 	unsigned int width, height;
 	
