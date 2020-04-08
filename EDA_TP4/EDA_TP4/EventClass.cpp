@@ -23,6 +23,7 @@ EventClass::~EventClass() {
 		al_destroy_event_queue(Queue);
 }
 
+//Talks different courses of action according to event input.
 void EventClass::dispatch(void* thisSim) {
 	Simulation* simPtr = (Simulation*) thisSim;
 

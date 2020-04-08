@@ -1,8 +1,6 @@
 #include "Simulation.h"
 #include <allegro5/allegro_image.h>
-#include <allegro5/allegro_primitives.h>
 #include <allegro5/keyboard.h>
-#include <allegro5/mouse.h>
 
 using namespace std;
 
@@ -49,19 +47,13 @@ bool Simulation::setAllegro(void) {
 		result = false;
 	}
 
-	////Attempts to initialize primitives addon.
-	//else if (!al_init_primitives_addon()) {
-	//	cout << "Failed to initialize primitives addon\n";
-	//	result = false;
-	//}
-	//Attempts to initialize mouse.
-	/*else if (!al_install_mouse()) {
-		cout << "Failed to install mouse\n";
-		result = false;
-	}*/
 	//Attempts to initialize keyboard.
 	else if (!al_install_keyboard()) {
 		cout << "Failed to install keyboard\n";
+		result = false;
+	}
+	else if (!al_init_image_addon()) {
+		cout << "Failed to initialize image addon.\n";
 		result = false;
 	}
 
@@ -137,6 +129,7 @@ Simulation::~Simulation() {
 		delete wormVector[i];
 }
 
+//Communicates "outside world" with EventClass' dispatcher.
 void Simulation::dispatch(void) {
 	eventControl->dispatch(this);
 }
@@ -152,10 +145,12 @@ void Simulation::refresh(void) {
 
 }
 
+/*Creates wormCount worms in memory and stores them in wormVector.
+Returns false if there's been an allocation error.*/
 bool Simulation::initializeWorms(void) {
 	bool result = true;
 	for (int i = 0; i < wormCount; i++) {
-		if (!(wormVector[i] = new (nothrow) Worm()))
+		if (!(wormVector[i] = new (nothrow) Worm))
 			result = false;
 	}
 
