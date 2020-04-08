@@ -1,14 +1,19 @@
 #include "GraphicClass.h"
 #include "Worm.h"
+#include <string>
+
+using namespace std;
 
 //GraphicClass constructor.
 GraphicClass::GraphicClass(unsigned int height_, unsigned int width_) :
     width(width_), height(height_) {
     
-    for (int i = 0; i < BITAMOUNT; i++) {
+    for (int i = 0; i < BITAMOUNT; i++)
         moveBitmaps[i] = nullptr;
-        jumpBitmaps[i] = nullptr;
-    }
+
+    
+    for (int i = 0; i < BITAMOUNT2; i++)
+       jumpBitmaps[i] = nullptr;
 
     display = nullptr;
 }
@@ -21,6 +26,9 @@ bool GraphicClass::createBitmaps(void) {
     for (int i = 0; i < BITAMOUNT; i++) {
         if (!(moveBitmaps[i] = al_create_bitmap(width, height)))
             result = false;
+    }
+
+    for (int i = 0; i < BITAMOUNT2; i++) {
         if (!(jumpBitmaps[i] = al_create_bitmap(width, height)))
             result = false;
     }
@@ -43,9 +51,13 @@ GraphicClass::~GraphicClass(void) {
     for (int i = 0; i < BITAMOUNT; i++) {
         if (moveBitmaps[i])
             al_destroy_bitmap(moveBitmaps[i]);
+    }
+
+    for (int i = 0; i < BITAMOUNT; i++) {
         if (jumpBitmaps[i])
             al_destroy_bitmap(jumpBitmaps[i]);
     }
+
     if (display)
         al_destroy_display(display);
 }
@@ -79,7 +91,35 @@ bool GraphicClass::loadBitmaps(void) {
 
     bool result = true;
 
-    //Loads bitmaps, checking for errors.
+    string name = "wwalking\wwalk-F";
+    string tempstr;
+    char* tempchar = (char*)malloc(10 * sizeof(char));
+   
+    if (!tempchar)
+        return false;
+   
+    for (int i = 0; i < BITAMOUNT; i++) {
+        
+        tempstr = name + to_string(i+1);
+        
+        tempchar = strcpy(tempchar, tempstr.c_str());
+       
+        if (!(moveBitmaps[i] = al_load_bitmap(tempchar)))
+            result = false;
+    }
+
+    name = "wjump\wjump-F";
+
+    for (int i = 0; i < BITAMOUNT2; i++) {
+        tempstr = name + to_string(i + 1);
+
+        tempchar = strcpy(tempchar, tempstr.c_str());
+
+        if (!(jumpBitmaps[i] = al_load_bitmap(tempchar)))
+            result = false;
+    }
+
+    free (tempchar);
 
     return result;
 
