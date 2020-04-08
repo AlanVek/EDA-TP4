@@ -57,19 +57,23 @@ void Worm::start(int keyCode, int whichMove) {
 
 	/*If user pressed moving key...*/
 	if (whichMove == -1) {
-		isMoving = true;
+		if (!isJumping) {
+			isMoving = true;
 
-		/*If it's to the left, direction = -1. Otherwise, direction = 1.*/
-		if (keyCode == *moveKeys)
-			direction = -1;
-		else
-			direction = 1;
+			/*If it's to the left, direction = -1. Otherwise, direction = 1.*/
+			if (keyCode == *moveKeys)
+				direction = -1;
+			else
+				direction = 1;
+		}
 	}
 
 	/*If user pressed jumping key...*/
 	else {
-		isJumping = true;
-		isJumpPressed = true;
+		if (!isMoving) {
+			isJumping = true;
+			isJumpPressed = true;
+		}
 	}
 }
 
