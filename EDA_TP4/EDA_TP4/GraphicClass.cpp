@@ -16,6 +16,7 @@ GraphicClass::GraphicClass(unsigned int width_, unsigned int height_) :
        jumpBitmaps[i] = nullptr;
 
     display = nullptr;
+    background = nullptr;
 }
 
 
@@ -33,6 +34,8 @@ bool GraphicClass::createBitmaps(void) {
             result = false;
     }
 
+    if (!(background = al_create_bitmap(width, height)))
+        result = false;
     if (result)
         result = loadBitmaps();
 
@@ -60,6 +63,9 @@ GraphicClass::~GraphicClass(void) {
 
     if (display)
         al_destroy_display(display);
+
+    if (background)
+        al_destroy_bitmap(background);
 }
 
 /*Draws every worm in its current position, with its corresponding bitmap.*/
@@ -111,6 +117,9 @@ bool GraphicClass::loadBitmaps(void) {
             result = false;
     }
 
+    if (!(background = al_load_bitmap("Scenario.png")))
+        result = false;
+
     name = "wjump-F";
 
     for (int i = 0; i < BITAMOUNT2; i++) {
@@ -128,4 +137,8 @@ bool GraphicClass::loadBitmaps(void) {
 
 }
 
+void GraphicClass::drawBackground(void) {
 
+    al_draw_bitmap(background, 0, 0, 0);
+
+}

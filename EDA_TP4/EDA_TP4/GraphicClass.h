@@ -21,12 +21,15 @@ public:
 
 	ALLEGRO_DISPLAY*& getDisplay(void);
 
+	void drawBackground(void);
+
 	~GraphicClass();
 
 private:
 
 	ALLEGRO_BITMAP* moveBitmaps[BITAMOUNT];
 	ALLEGRO_BITMAP* jumpBitmaps[BITAMOUNT2];
+	ALLEGRO_BITMAP* background;
 	ALLEGRO_DISPLAY* display;
 	unsigned int width, height;
 	

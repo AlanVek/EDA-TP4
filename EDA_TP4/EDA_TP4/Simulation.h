@@ -11,7 +11,7 @@ using namespace std;
 //Default values for width, height, FPS and display creation.
 /**************************************************/
 #define defaultDisplay true
-#define defaultWidth 1300
+#define defaultWidth 1920
 #define defaultHeight 900
 #define defaultFPS 50.0
 /**************************************************/

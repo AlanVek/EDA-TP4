@@ -162,13 +162,13 @@ void Worm::updateStep(void) {
 		if (stepCountJump == 10) {
 			isJumping = isJumpPressed;
 			stepCountJump = 0;
-			/*ySpeed = INITIALYSPEED*/
+			ySpeed = INITIALYSPEED;
 		}
 
 		/*If worm has to move, then it updates xPos, yPos, ySpeed and stepCountJump. */
 		else {
-			xPos += direction * cos(M_PI / 3) * MODULE /10;
-			yPos += direction * ySpeed;
+			xPos += direction * cos(M_PI / 3) * MODULE;
+			yPos += ySpeed;
 			ySpeed -= GRAVITY;
 			stepCountJump++;
 		}

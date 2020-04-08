@@ -200,8 +200,8 @@ void Simulation::stopMoving(int keyCode) {
 /* When timer does a lap, the image gets refreshed
 and the worms' stepCount gets updated to the next step.*/
 void Simulation::refresh(void) {
-
-	al_clear_to_color(al_map_rgb(255, 255, 255));
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	graphicControl->drawBackground();
 	for (int i = 0; i < wormCount; i++) {
 		graphicControl->draw(wormVector[i]);
 		wormVector[i]->updateStep();		
