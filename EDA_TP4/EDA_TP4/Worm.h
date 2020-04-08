@@ -2,6 +2,8 @@
 #include <vector>
 
 class Worm{
+public:
 
+	Worm();
 };
 

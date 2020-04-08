@@ -5,6 +5,8 @@
 #include "Worm.h"
 using namespace std;
 
+#define MAXWORMS 2
+
 //Temporary values to check correct initialization.
 /**************************************************/
 #define defaultDisplay true
@@ -17,7 +19,7 @@ class Simulation {
 public:
 
 	//Simulation constructor.
-	Simulation(unsigned int width_ = defaultWidth, unsigned int height_ = defaultHeight, double FPS_ = defaultFPS);
+	Simulation(unsigned int width_ = defaultWidth, unsigned int height_ = defaultHeight, double FPS_ = defaultFPS, int wormCount_ = MAXWORMS);
 
 	bool setSimulation(bool displayCreation = defaultDisplay);
 
@@ -37,6 +39,7 @@ public:
 
 	void dispatch(void);
 
+	bool initializeWorms(void);
 	~Simulation();
 
 private:
@@ -45,6 +48,10 @@ private:
 	GraphicClass* graphicControl;
 	TimeClass* timeControl;
 	EventClass* eventControl;
+
+	Worm* wormVector[MAXWORMS];
+
+	int wormCount;
 		
 	unsigned int width, height;
 	double FPS;

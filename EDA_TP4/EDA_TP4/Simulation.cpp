@@ -8,9 +8,9 @@ using namespace std;
 
 
 //Simulation constructor.
-Simulation::Simulation(unsigned int width_, unsigned int height_, double FPS_) :
+Simulation::Simulation(unsigned int width_, unsigned int height_, double FPS_, int wormCount_) :
 
-	width (width_), height(height_), FPS(FPS_){
+	width (width_), height(height_), FPS(FPS_), wormCount(wormCount_){
 
 	graphicControl = nullptr;
 	timeControl = nullptr;
@@ -32,6 +32,11 @@ bool Simulation::initializeAll(void) {
 		cout << "Failed to set simulation.\n";
 		result = false;
 	}	
+
+	else if (!initializeWorms()) {
+		cout << "Failed to initialize worms.\n";
+		result = false;
+	}
 	return result;
 }
 
@@ -127,6 +132,9 @@ Simulation::~Simulation() {
 	delete graphicControl;
 	delete timeControl;
 	delete eventControl;
+
+	for (int i = 0; i < wormCount; i++)
+		delete wormVector[i];
 }
 
 void Simulation::dispatch(void) {
@@ -142,4 +150,14 @@ void Simulation::stopMoving(void) {
 }
 void Simulation::refresh(void) {
 
+}
+
+bool Simulation::initializeWorms(void) {
+	bool result = true;
+	for (int i = 0; i < wormCount; i++) {
+		if (!(wormVector[i] = new (nothrow) Worm()))
+			result = false;
+	}
+
+	return result;
 }
