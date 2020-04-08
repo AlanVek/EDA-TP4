@@ -15,9 +15,12 @@ int main() {
 		result = -1;
 	}
 
+	mySim.getTimeControl()->startTimer();
+
 	while (!endOfInput) {
 		if (mySim.getEventControl()->getNextEventType()) {
-			//mySim.dispatch();
+			//if (!mySim.dispatch())
+				//endOfInput = true;
 		}
 	}
 

@@ -4,6 +4,8 @@
 
 using namespace std;
 
+bool setAllegro(void);
+
 
 //Simulation constructor.
 Simulation::Simulation(unsigned int width_, unsigned int height_, double FPS_, int wormCount_) :
@@ -40,7 +42,7 @@ bool Simulation::initializeAll(void) {
 
 /*Initializes Allegro and its addons. Return false and prints
 the correspondent message if any process failed. */
-bool Simulation::setAllegro(void) {
+bool setAllegro(void) {
 	bool result = true;
 	if (!al_init()) {
 		cout << "Failed to Initialize Allegro\n";
@@ -130,15 +132,25 @@ Simulation::~Simulation() {
 }
 
 //Communicates "outside world" with EventClass' dispatcher.
-void Simulation::dispatch(void) {
-	eventControl->dispatch(this);
+bool Simulation::dispatch(void) {
+	return (eventControl->dispatch(this));
 }
 
+bool Simulation::startMoving(int keyCode) {
 
-void Simulation::startMoving(void) {
+	int checker;
+	for (int i = 0; i < wormCount; i++) {
+		checker = wormVector[i]->checkKeyCode(keyCode);
+		if (checker) {
+			wormVector[i]->move(keyCode, checker);
+			return true;
+		}
+	}
+	return false;
 
 }
-void Simulation::stopMoving(void) {
+void Simulation::stopMoving(int keyCode) {
+
 
 }
 void Simulation::refresh(void) {

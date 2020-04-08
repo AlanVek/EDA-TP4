@@ -24,15 +24,16 @@ EventClass::~EventClass() {
 }
 
 //Talks different courses of action according to event input.
-void EventClass::dispatch(void* thisSim) {
+bool EventClass::dispatch(void* thisSim) {
 	Simulation* simPtr = (Simulation*) thisSim;
+	bool result = false;
 
 	switch (Event.type) {
 	case ALLEGRO_EVENT_KEY_DOWN:
-		simPtr->startMoving();
+		result = simPtr->startMoving(Event.keyboard.keycode);
 		break;
 	case ALLEGRO_EVENT_KEY_UP:
-		simPtr->stopMoving();
+		simPtr->stopMoving(Event.keyboard.keycode);
 		break;
 	case ALLEGRO_EVENT_TIMER:
 		simPtr->refresh();
@@ -40,6 +41,8 @@ void EventClass::dispatch(void* thisSim) {
 	default:
 		break;
 	}
+
+	return result;
 }
 
 

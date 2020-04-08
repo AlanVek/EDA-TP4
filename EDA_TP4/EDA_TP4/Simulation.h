@@ -5,12 +5,12 @@
 #include "Worm.h"
 using namespace std;
 
+//Maximum allowed number of worms.
 #define MAXWORMS 2
 
-//Temporary values to check correct initialization.
+//Default values for width, height, FPS and display creation.
 /**************************************************/
 #define defaultDisplay true
-
 #define defaultWidth 900
 #define defaultHeight 900
 #define defaultFPS 50.0
@@ -21,23 +21,21 @@ public:
 	//Simulation constructor.
 	Simulation(unsigned int width_ = defaultWidth, unsigned int height_ = defaultHeight, double FPS_ = defaultFPS, int wormCount_ = MAXWORMS);
 
-	bool setSimulation(bool displayCreation = defaultDisplay);
-
-	bool setAllegro(void);
-
 	GraphicClass* getGraphicControl(void);
 	TimeClass* getTimeControl(void);
 	EventClass* getEventControl(void);
 
 	bool initializeAll(void);
 
-	void startMoving(void);
+	bool setSimulation(bool displayCreation = defaultDisplay);
 
-	void stopMoving(void);
+	bool startMoving(int keyCode);
+
+	void stopMoving(int keyCode);
 
 	void refresh(void);
 
-	void dispatch(void);
+	bool dispatch(void);
 
 	bool initializeWorms(void);
 	~Simulation();
