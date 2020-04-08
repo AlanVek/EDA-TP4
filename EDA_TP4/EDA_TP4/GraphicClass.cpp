@@ -3,7 +3,15 @@
 
 //GraphicClass constructor.
 GraphicClass::GraphicClass(unsigned int height_, unsigned int width_) :
-    width(width_), height(height_) {};
+    width(width_), height(height_) {
+    
+    for (int i = 0; i < BITAMOUNT; i++) {
+        moveBitmaps[i] = nullptr;
+        jumpBitmaps[i] = nullptr;
+    }
+
+    display = nullptr;
+}
 
 
 //Attempts to create bitmaps. Returns true if successful. 

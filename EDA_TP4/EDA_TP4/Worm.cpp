@@ -1,4 +1,5 @@
 #include "Worm.h"
+#include <iostream>
 
 #define STARTINGY 616
 
@@ -6,36 +7,36 @@
 Worm::Worm() {
 	isMoving = false;
 	isJumping = false;
+
 	stepCountMove = 0;
 	stepCountJump = 0;
+
 	xPos = 100;
 	yPos = STARTINGY;
+
+	jumpKey = NULL;
+	for (int i = 0; i < MAXKEYS; i++)
+		moveKeys[i] = NULL;
 };
 
-/* Recieves an array of keys and sets them to jumping keys.*/
-void Worm::setJumpKeys(const int* validEvents_, int amount) {
-	for (int i = 0; i < amount; i++)
-		jumpKeys[i] = validEvents_[i];
-
-	numJumpKeys = amount;
+/* Recieves a key and sets it to jumping key.*/
+void Worm::setJumpKey(int validEvent_) {
+	jumpKey = validEvent_;
 }
 /* Recieves an array of keys and sets them to moving keys.*/
 void Worm::setMoveKeys(const int* validEvents_, int amount) {
 	for (int i = 0; i < amount; i++)
 		moveKeys[i] = validEvents_[i];
-
-	numMoveKeys = amount;
 }
 
 /*Checks if the given keyCode is linked to any movement.
 If it's jumping, it returns 1. If it's moving, it returns -1.
 If it's neither, it returns 0.*/
 int Worm::checkKeyCode(int keyCode) {
-	for (int i = 0; i < numJumpKeys; i++) {
-		if (jumpKeys[i] == keyCode)
-			return 1;
-	}
-	for (int i = 0; i < numMoveKeys; i++) {
+	if (keyCode == jumpKey)
+		return 1;
+
+	for (int i = 0; i < MAXKEYS; i++) {
 		if (moveKeys[i] == keyCode)
 			return -1;
 	}

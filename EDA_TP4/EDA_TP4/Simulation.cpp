@@ -15,6 +15,9 @@ Simulation::Simulation(unsigned int width_, unsigned int height_, double FPS_, i
 	graphicControl = nullptr;
 	timeControl = nullptr;
 	eventControl = nullptr;
+
+	for (int i = 0; i < wormCount; i++)
+		wormVector[i] = nullptr;
 }
 
 bool Simulation::initializeAll(void) {
@@ -33,10 +36,15 @@ bool Simulation::initializeAll(void) {
 		result = false;
 	}	
 
+	//Attempts to initialize worms.
 	else if (!initializeWorms()) {
 		cout << "Failed to initialize worms.\n";
 		result = false;
 	}
+
+	//If everything was initialized correctly, it sets default key values for worm movement.
+	if (result)
+		setDefaultKeys();
 	return result;
 }
 
@@ -44,6 +52,8 @@ bool Simulation::initializeAll(void) {
 the correspondent message if any process failed. */
 bool setAllegro(void) {
 	bool result = true;
+
+	//Attempts to initialize Allegro.
 	if (!al_init()) {
 		cout << "Failed to Initialize Allegro\n";
 		result = false;
@@ -54,6 +64,8 @@ bool setAllegro(void) {
 		cout << "Failed to install keyboard\n";
 		result = false;
 	}
+
+	//Attempts to initialize image addon.
 	else if (!al_init_image_addon()) {
 		cout << "Failed to initialize image addon.\n";
 		result = false;
@@ -168,8 +180,8 @@ void Simulation::refresh(void) {
 
 	al_clear_to_color(al_map_rgb(255, 255, 255));
 	for (int i = 0; i < wormCount; i++) {
-		wormVector[i]->updateStep();
-		graphicControl->draw(wormVector[i]);		
+		graphicControl->draw(wormVector[i]);
+		wormVector[i]->updateStep();		
 	}
 }
 
@@ -183,4 +195,16 @@ bool Simulation::initializeWorms(void) {
 	}
 
 	return result;
+}
+
+//Sets default key values.
+void Simulation::setDefaultKeys(void) {
+	int moveKeys1[] = { ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT };
+	int moveKeys2[] = { ALLEGRO_KEY_A, ALLEGRO_KEY_S };
+	
+	wormVector[0]->setJumpKey(ALLEGRO_KEY_UP);
+	wormVector[0]->setMoveKeys(moveKeys1,2);
+
+	wormVector[1]->setJumpKey(ALLEGRO_KEY_W);
+	wormVector[1]->setMoveKeys(moveKeys2,2);
 }

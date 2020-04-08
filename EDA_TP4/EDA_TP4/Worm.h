@@ -5,7 +5,7 @@ class Worm{
 public:
 	Worm();
 
-	void setJumpKeys(const int* validEvents_, int amount);
+	void setJumpKey(int validEvent_);
 	void setMoveKeys(const int* validEvents_, int amount);
 
 	int checkKeyCode (int keyCode);
@@ -26,8 +26,8 @@ public:
 private:
 	bool isMoving, isJumping;
 	int stepCountMove, stepCountJump;
-	int numJumpKeys, numMoveKeys;
-	int jumpKeys[MAXKEYS];
+	//int numJumpKeys, numMoveKeys;
+	int jumpKey;
 	int moveKeys[MAXKEYS];
 	float xPos, yPos;
 };

@@ -25,6 +25,7 @@ public:
 	TimeClass* getTimeControl(void);
 	EventClass* getEventControl(void);
 
+	void setDefaultKeys(void);
 	bool initializeAll(void);
 
 	bool setSimulation(bool displayCreation = defaultDisplay);
