@@ -201,7 +201,7 @@ bool Simulation::initializeWorms(void) {
 //Sets default key values.
 void Simulation::setDefaultKeys(void) {
 	int moveKeys1[] = { ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_LEFT };
-	int moveKeys2[] = { ALLEGRO_KEY_A, ALLEGRO_KEY_S };
+	int moveKeys2[] = { ALLEGRO_KEY_A, ALLEGRO_KEY_D };
 	
 	wormVector[0]->setJumpKey(ALLEGRO_KEY_UP);
 	wormVector[0]->setMoveKeys(moveKeys1,2);

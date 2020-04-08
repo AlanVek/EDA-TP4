@@ -11,6 +11,7 @@
 Worm::Worm() {
 	isMoving = false;
 	isJumping = false;
+	isJumpPressed = false;
 
 	stepCountMove = 0;
 	stepCountJump = 0;
@@ -62,20 +63,34 @@ void Worm::start(int keyCode, int whichMove) {
 			direction = 1;
 	}
 
-	else
+	else {
 		isJumping = true;
+		isJumpPressed = true;
+	}
 }
 
-/*Sets isMoving/isJumping to false, and resets corresponding stepCount to 0.*/
+/*Sets corresponding key state to false.*/
 void Worm::stop(int keyCode, int whichMove) {
+	int HHH = 0; //Define actual value.
+
+	/*If moving key was released...*/
 	if (whichMove == -1) {
-		isMoving = false;
-		stepCountMove = 0;
+
+		/*Sets key state to false.*/
+		isMovePressed = false;
+
+		/*If the 100ms hadn't elapsed...*/
+		if (stepCountMove < HHH) {
+
+			/*The worm isn't moving, so it resets isMoving and stepCount Move.
+			The worm's direction changes to its opposite.*/
+			isMoving = false;
+			stepCountMove = 0;
+			direction *= -1;
+		}
 	}
-	else {
-		isJumping = false;
-		stepCountJump = 0;
-	}
+	else
+		isJumpPressed = false;
 }
 
 /*Class getters.*/
@@ -89,18 +104,44 @@ bool Worm::getJumpState(void) { return isJumping; }
 /*If the worm was moving/jumping, it updates the corresponding stepCount 
 and returns true. Otherwise, it returns false.*/
 void Worm::updateStep(void) {
-	int XXX = 0, YYY = 0; //Define actual step values for position change.
+	int XXX = 0, YYY = 0, ZZZ = 0, WWW = 0; //Define actual step values for position change.
+	
+	/*If worm is moving horizontally...*/
 	if (isMoving) {
-		stepCountMove++;
+
+		/*If it has to move, it updates xPos.*/
 		if (stepCountMove == XXX)
 			xPos += direction * 9;
+
+		/*If movement has finished, it resets stepCountMove and isMoving.*/
+		if (stepCountMove == WWW) {
+			isMoving = isMovePressed;
+			stepCountMove = 0;
+		}
+
+		/*If not, then it increases stepCountMove. */
+		else
+			stepCountMove++;
 	}
 
+	/*If worm is jumping...*/
 	else if (isJumping) {
-		stepCountJump++;
+
+		/*If worm has to move, then it updates xPos and yPos.*/
 		if (stepCountJump == YYY) {
 			xPos += direction * cos(M_PI / 3) * MODULE;
 			yPos += direction * sin(M_PI / 3) * MODULE;
 		}
+
+		/*If jump has finished, it resets stepCountMove and isJumping.*/
+		if (stepCountJump == ZZZ) {
+			isJumping = isJumpPressed;
+			stepCountJump = 0;
+		}
+		
+		/*If not, then it increases stepCountJump.*/
+		else
+			stepCountJump++;
+
 	}
 }

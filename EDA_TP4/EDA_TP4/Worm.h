@@ -24,7 +24,7 @@ public:
 	void start(int keyCode, int whichMove);
 
 private:
-	bool isMoving, isJumping;
+	bool isMoving, isJumping, isJumpPressed, isMovePressed;
 	int stepCountMove, stepCountJump;
 	//int numJumpKeys, numMoveKeys;
 	int jumpKey;
