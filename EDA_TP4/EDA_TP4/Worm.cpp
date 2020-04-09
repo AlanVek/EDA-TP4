@@ -9,12 +9,13 @@
 #define GRAVITY 0.24
 #define MINX 701
 #define MAXX 1212
-#define IDLEFRAMES 8
+#define IDLEFRAMES 8.0
 #define CHECKINGFRAMES 5
 #define MOVEMENT 9
-#define INITIALYSPEED -sin(M_PI/3)*MODULE
-#define JUMPIDLE 4
-#define FALLFRAMES 40
+#define ANGLE M_PI/3
+#define INITIALYSPEED -sin(ANGLE)*MODULE
+#define FALLFRAMES ((-1*INITIALYSPEED)/(0.5*GRAVITY))
+#define FPS 50.0
 
 using namespace std;
 
@@ -90,6 +91,7 @@ void Worm::start(int keyCode, int whichMove) {
 		if (!isMoving && !isJumping) {
 			isJumping = true;
 			isJumpPressed = true;
+			stepCountJump++;
 		}
 	}
 }
@@ -158,7 +160,6 @@ void Worm::updateStep(void) {
 			tempStepCountMove = 0;
 			stepCountMove = 0;
 		}
-		
 	}
 
 	/*If worm is jumping...*/
@@ -166,33 +167,35 @@ void Worm::updateStep(void) {
 
 		tempStepCountJump++;
 
-		//Until the 4th image, the position doesn't change.
-		if (tempStepCountJump <= JUMPIDLE) {
-			stepCountJump++;
-		}
-		
-		//Then, there are 36 more cycles of position change.
-		else if (tempStepCountJump<=(JUMPIDLE + FALLFRAMES)) {
-
-			/*Updates position, checking and correcting if it's gone out of range.*/
-			if (!(tempStepCountJump%3))
-				xPos += direction * cos(M_PI / 3) * MODULE;
-			if (xPos > MAXX || xPos < MINX)
-				xPos -= direction * cos(M_PI / 3) * MODULE;
-
-			yPos += ySpeed;
-			ySpeed += GRAVITY;
-			if (yPos > STARTINGY)
-				yPos = STARTINGY;
-
-			/*After tempStepCountJump == 28, every fourth frame, the image changes.*/
-			if (!(tempStepCountJump % JUMPIDLE) && tempStepCountJump>=(7 * JUMPIDLE))
+		/*Until the 4th image, the position doesn't change.
+		The image is updated every 2 frames. */
+		if (tempStepCountJump <= IDLEFRAMES) {
+			if (!(tempStepCountJump % 2))
 				stepCountJump++;
 		}
-		/*After 4 more frames (arbitrarily decided, for esthetic purposes),
-		everything goes back to original values. */
-		else if (tempStepCountJump>=JUMPIDLE + FALLFRAMES + 4){
-			yPos -= ySpeed;
+
+		//Then, there are approximately 34 more cycles of position change.
+		else if (tempStepCountJump <= ((IDLEFRAMES + FALLFRAMES+2))) {
+
+			/*Updates position, checking and correcting if it's gone out of range.*/
+			xPos += direction * cos(ANGLE) * MODULE;
+			
+			if (xPos > MAXX || xPos < MINX)
+				xPos -= direction * cos(ANGLE) * MODULE;
+
+			yPos += ySpeed;
+			if (yPos > STARTINGY)
+				yPos = STARTINGY;
+			ySpeed += GRAVITY;
+		}
+		//After the fall, the image is updated every 2 frames.
+		else if (tempStepCountJump<=FPS){
+			if (tempStepCountJump % 2)
+				stepCountJump++;
+		}
+
+		/*After the full 50 frames, everything goes back to original values. */
+		else{
 			isJumping = isJumpPressed;
 			yPos = STARTINGY;
 			ySpeed = INITIALYSPEED;

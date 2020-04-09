@@ -87,7 +87,6 @@ void GraphicClass::draw(void* whichWorm) {
     else if (wormPtr->getJumpState()) {
         state = wormPtr->getStepJump();
         temp = jumpBitmaps[state];
-        cout << state << endl;
     }
     else
         //Idle image is the 4th.
