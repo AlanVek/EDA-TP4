@@ -105,9 +105,9 @@ bool GraphicClass::loadBitmaps(void) {
 
     bool result = true;
 
-    string name = "wwalk-F";
+    string name = "wwalking/wwalk-F";
     string tempstr;
-    char* tempchar = (char*)malloc(15 * sizeof(char));
+    char* tempchar = (char*)malloc(30 * sizeof(char));
    
     if (!tempchar)
         return false;
@@ -125,7 +125,7 @@ bool GraphicClass::loadBitmaps(void) {
     if (!(background = al_load_bitmap("Scenario.png")))
         result = false;
 
-    name = "wjump-F";
+    name = "wjump/wjump-F";
 
     for (int i = 0; i < (YFRAMES + 1); i++) {
         tempstr = name + to_string(i + 1) + ".png";

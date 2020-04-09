@@ -9,7 +9,6 @@
 #define GRAVITY 0.24
 #define MINX 701
 #define MAXX 1212
-
 #define IDLEFRAMES 8
 #define CHECKINGFRAMES 5
 #define MOVEMENT 9
@@ -190,9 +189,9 @@ void Worm::updateStep(void) {
 			if (!(tempStepCountJump % JUMPIDLE) && tempStepCountJump>=(7 * JUMPIDLE))
 				stepCountJump++;
 		}
-		/*After 2 more frames (arbitrarily decided, for esthetic purposes),
+		/*After 4 more frames (arbitrarily decided, for esthetic purposes),
 		everything goes back to original values. */
-		else if (tempStepCountJump>=JUMPIDLE + FALLFRAMES + 2){
+		else if (tempStepCountJump>=JUMPIDLE + FALLFRAMES + 4){
 			yPos -= ySpeed;
 			isJumping = isJumpPressed;
 			yPos = STARTINGY;
