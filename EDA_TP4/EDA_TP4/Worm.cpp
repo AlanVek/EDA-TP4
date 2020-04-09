@@ -124,11 +124,6 @@ void Worm::stop(int keyCode, int whichMove) {
 			isMoving = false;
 
 			direction *= -1;
-
-			if (direction == 1)
-				stepCountMove = XFRAMES;
-			else
-				stepCountMove = 0;
 		}
 	}
 	else
@@ -150,21 +145,27 @@ void Worm::updateStep(void) {
 	/*If worm is moving horizontally...*/
 	if (isMoving) {
 
-		/*Sets stepCountMove in case it's moving to the right.*/
-		if (direction == 1 && !tempStepCountMove)
-			stepCountMove = XFRAMES;
-
 		/*If worm is still in first five ticks, it doesn't update stepCountMove.*/
 		if (tempStepCountMove < IDLEFRAMES)
 			tempStepCountMove++;
 		else
-			stepCountMove += -1*direction;
+			stepCountMove++;
 
-		if (direction == 1)
-			move(XFRAMES, 0);
-		
-		else 
-			move(0, XFRAMES);
+		if (stepCountMove == XFRAMES) {
+			stepCountMove = 0;
+			if (xPos <= MAXX - MOVEMENT && direction == 1)
+				xPos += MOVEMENT;
+			else if (xPos >= MINX + MOVEMENT && direction == -1)
+				xPos -= MOVEMENT;
+			tempStepCountMove++;
+		}
+
+		/*After full cycle (50 ticks), it resets all flags.*/
+		if (tempStepCountMove == IDLEFRAMES + 3) {
+			isMoving = isMovePressed;
+			tempStepCountMove = 0;
+			stepCountMove = 0;
+		}
 		
 	}
 
@@ -189,22 +190,4 @@ void Worm::updateStep(void) {
 	}
 }
 
-void Worm::move(int initStepCount, int finalStepCount) {
-
-	/*If a move cycle ended (20 ticks/35ticks/50ticks), it resets counter. */
-	if (stepCountMove == finalStepCount) {
-		stepCountMove = initStepCount;
-		if (xPos <= MAXX - MOVEMENT && direction == 1)
-			xPos += MOVEMENT;
-		else if (xPos >= MINX + MOVEMENT && direction == -1)
-			xPos -= MOVEMENT;
-		tempStepCountMove++;
-	}
-
-	/*After full cycle (50 ticks), it resets all flags.*/
-	if (tempStepCountMove == IDLEFRAMES + 3) {
-		isMoving = isMovePressed;
-		tempStepCountMove = 0;
-		stepCountMove = initStepCount;
-	}
-}
+int Worm::getDirection() { return direction; }

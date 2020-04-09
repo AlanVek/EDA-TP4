@@ -18,8 +18,7 @@ public:
 	int getStepMove(void);
 	int getStepJump(void);
 	void updateStep(void);
-
-	void move(int initStepCount, int finalStepCount);
+	int getDirection(void);
 
 	bool getMovementState(void);
 	bool getJumpState(void);

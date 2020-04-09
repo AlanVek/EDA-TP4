@@ -91,7 +91,10 @@ void GraphicClass::draw(void* whichWorm) {
     else
         temp = moveBitmaps[0];
 
-    al_draw_bitmap(temp, wormPtr->getXPos(), wormPtr->getYPos(), 0);
+    if (wormPtr->getDirection()==1)
+        al_draw_bitmap(temp, wormPtr->getXPos(), wormPtr->getYPos(), ALLEGRO_FLIP_HORIZONTAL);
+    else
+        al_draw_bitmap(temp, wormPtr->getXPos(), wormPtr->getYPos(), 0);
  
 }
 
