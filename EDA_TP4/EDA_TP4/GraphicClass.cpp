@@ -86,7 +86,7 @@ void GraphicClass::draw(void* whichWorm) {
     /*If worm is jumping, it gets the jumping step.*/
     else if (wormPtr->getJumpState()) {
         state = wormPtr->getStepJump();
-        temp = jumpBitmaps[state-1];
+        temp = jumpBitmaps[state - 1];
     }
     else
         temp = moveBitmaps[0];

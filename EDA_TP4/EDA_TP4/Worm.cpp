@@ -9,18 +9,22 @@
 #define GRAVITY 0.24
 #define MINX 701
 #define MAXX 1212
+#define XFRAMES 15
+#define YFRAMES 10
+#define IDLEFRAMES 5
 
 
-#define INITIALYSPEED (sin(M_PI/3)*4.5 - 1/2 * 0.24 * 100)/10
+#define INITIALYSPEED (sin(M_PI/3)*MODULE - 1/2 * GRAVITY * YFRAMES*YFRAMES)/YFRAMES
 /*Worm constructor. Sets variables to initial values.*/
 Worm::Worm() {
 	isMoving = false;
 	isJumping = false;
 	isJumpPressed = false;
-	timer = 0;
+	//timer = 0;
 
 	stepCountMove = 0;
 	stepCountJump = 0;
+	tempStepCountMove = 0;
 
 	xPos = rand() % (MAXX - MINX + 1) + MINX;
 	yPos = STARTINGY;
@@ -42,18 +46,18 @@ void Worm::setMoveKeys(const int* validEvents_, int amount) {
 	for (int i = 0; i < amount; i++)
 		moveKeys[i] = validEvents_[i];
 }
-// sets timer
-void Worm::setTimer(int MSECS) {
-	timer = MSECS;
-}
-// adds to timer
-void Worm::addTimer(int MSECS) {
-	timer += MSECS;
-}
-// gets timer 
-int Worm::getTimer(void) {
-	return timer;
-}
+//// sets timer
+//void Worm::setTimer(int MSECS) {
+//	timer = MSECS;
+//}
+//// adds to timer
+//void Worm::addTimer(int MSECS) {
+//	timer += MSECS;
+//}
+//// gets timer 
+//int Worm::getTimer(void) {
+//	return timer;
+//}
 
 
 
@@ -80,12 +84,13 @@ void Worm::start(int keyCode, int whichMove) {
 	if (whichMove == -1) {
 		if (!isJumping) {
 			isMoving = true;
-
+			isMovePressed = true;
 			/*If it's to the left, direction = -1. Otherwise, direction = 1.*/
 			if (keyCode == *moveKeys)
 				direction = -1;
-			else
+			else {
 				direction = 1;
+			}
 		}
 	}
 
@@ -102,7 +107,7 @@ void Worm::start(int keyCode, int whichMove) {
 
 /*Sets corresponding key state to false.*/
 void Worm::stop(int keyCode, int whichMove) {
-	int HHH = 3; //Define actual value.
+	int HHH = 5; //Define actual value.
 
 	/*If moving key was released...*/
 	if (whichMove == -1) {
@@ -111,13 +116,18 @@ void Worm::stop(int keyCode, int whichMove) {
 		isMovePressed = false;
 
 		/*If the 100ms hadn't elapsed...*/
-		if (stepCountMove < HHH) {
+		if (tempStepCountMove< HHH) {
 
 			/*The worm isn't moving, so it resets isMoving and stepCount Move.
 			The worm's direction changes to its opposite.*/
 			isMoving = false;
-			stepCountMove = 0;
+
 			direction *= -1;
+
+			if (direction == 1)
+				stepCountMove = XFRAMES;
+			else
+				stepCountMove = 0;
 		}
 	}
 	else
@@ -135,24 +145,51 @@ bool Worm::getJumpState(void) { return isJumping; }
 /*If the worm was moving/jumping, it updates the corresponding stepCount 
 and returns true. Otherwise, it returns false.*/
 void Worm::updateStep(void) {
-	int XXX = 15, YYY = 5,WWW = 50; //Define actual step values for position change.
-	
+
 	/*If worm is moving horizontally...*/
 	if (isMoving) {
 
-		/*If it has to move, it updates xPos.*/
-		if (stepCountMove == XXX)
-			xPos += direction * 9;
+		if (direction == 1 && !tempStepCountMove)
+			stepCountMove = XFRAMES;
 
-		/*If movement has finished, it resets stepCountMove and isMoving.*/
-		if (stepCountMove == 15) {
-			isMoving = isMovePressed;
-			stepCountMove = 0;
-		}
-
-		/*If not, then it increases stepCountMove. */
+			/*If worm is still in first five ticks, it doesn't update stepCountMove.*/
+		if (tempStepCountMove < IDLEFRAMES)
+			tempStepCountMove++;
 		else
-			stepCountMove++;
+			stepCountMove += -1*direction;
+
+		/*If a move cycle ended (20 ticks/35ticks/50ticks), it resets counter. */
+		if (direction == 1) {
+			if (stepCountMove == 0) {
+				stepCountMove = XFRAMES;
+				if (xPos<MAXX - 9)
+					xPos+= 9;
+				tempStepCountMove++;
+			}
+
+			/*After full cycle (50 ticks), it resets all flags.*/
+			if (tempStepCountMove == IDLEFRAMES + 3) {
+				isMoving = isMovePressed;
+				tempStepCountMove = 0;
+				stepCountMove = XFRAMES;
+			}
+		}
+		else {
+			if (stepCountMove == XFRAMES) {
+				stepCountMove = 0;
+				if (xPos > MINX + 9)
+					xPos -= 9;
+				tempStepCountMove++;
+			}
+
+			/*After full cycle (50 ticks), it resets all flags.*/
+			if (tempStepCountMove == IDLEFRAMES + 3) {
+				isMoving = isMovePressed;
+				tempStepCountMove = 0;
+				stepCountMove = 0;
+			}
+		}
+		
 	}
 
 	/*If worm is jumping...*/

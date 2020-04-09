@@ -18,9 +18,6 @@ public:
 	int getStepMove(void);
 	int getStepJump(void);
 	void updateStep(void);
-	void setTimer(int);
-	void addTimer(int);
-	int getTimer(void);
 
 	bool getMovementState(void);
 	bool getJumpState(void);
@@ -28,10 +25,8 @@ public:
 	void start(int keyCode, int whichMove);
 
 private:
-	int timer;
 	bool isMoving, isJumping, isJumpPressed, isMovePressed;
-	int stepCountMove, stepCountJump;
-	//int numJumpKeys, numMoveKeys;
+	int stepCountMove, stepCountJump, tempStepCountMove;
 	int jumpKey;
 	int moveKeys[MAXKEYS];
 	float xPos, yPos, ySpeed;
