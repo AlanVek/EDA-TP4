@@ -108,7 +108,6 @@ void Worm::start(int keyCode, int whichMove) {
 
 /*Sets corresponding key state to false.*/
 void Worm::stop(int keyCode, int whichMove) {
-	int HHH = 5; //Define actual value.
 
 	/*If moving key was released...*/
 	if (whichMove == -1) {
@@ -117,13 +116,11 @@ void Worm::stop(int keyCode, int whichMove) {
 		isMovePressed = false;
 
 		/*If the 100ms hadn't elapsed...*/
-		if (tempStepCountMove< HHH) {
+		if (tempStepCountMove< IDLEFRAMES) {
 
 			/*The worm isn't moving, so it resets isMoving and stepCount Move.
 			The worm's direction changes to its opposite.*/
 			isMoving = false;
-
-			direction *= -1;
 		}
 	}
 	else
@@ -181,7 +178,7 @@ void Worm::updateStep(void) {
 
 		/*If worm has to move, then it updates xPos, yPos, ySpeed and stepCountJump. */
 		else {
-			xPos += direction * cos(M_PI / 3) * MODULE/10;
+			xPos += direction * cos(M_PI / 3) * MODULE/(XFRAMES+1);
 			yPos += ySpeed;
 			ySpeed -= GRAVITY;
 			stepCountJump++;
