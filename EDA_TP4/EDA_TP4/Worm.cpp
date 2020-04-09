@@ -8,6 +8,8 @@
 #define MODULE 4.5
 #define GRAVITY 0.24
 #define MINX 701
+#define LEFT_SIDE_OFFSET -20
+#define RIGHT_SIDE_OFFSET -39
 #define MAXX 1212
 #define IDLEFRAMES 8.0
 #define CHECKINGFRAMES 5
@@ -149,7 +151,7 @@ void Worm::updateStep(void) {
 
 			/*Checks if worm is within allowed range.*/
 			xPos += MOVEMENT * direction;		
-			if (xPos > MAXX-39 || xPos < MINX-20)
+			if (xPos > MAXX + RIGHT_SIDE_OFFSET || xPos < MINX + LEFT_SIDE_OFFSET)
 				xPos -= MOVEMENT * direction;
 			tempStepCountMove++;
 		}
@@ -180,7 +182,7 @@ void Worm::updateStep(void) {
 			/*Updates position, checking and correcting if it's gone out of range.*/
 			xPos += direction * cos(ANGLE) * MODULE;
 			
-			if (xPos > MAXX || xPos < MINX)
+			if (xPos > MAXX + RIGHT_SIDE_OFFSET || xPos < MINX + LEFT_SIDE_OFFSET)
 				xPos -= direction * cos(ANGLE) * MODULE;
 
 			yPos += ySpeed;
