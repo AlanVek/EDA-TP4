@@ -12,6 +12,7 @@
 #define XFRAMES 15
 #define YFRAMES 10
 #define IDLEFRAMES 5
+#define MOVEMENT 9
 
 
 #define INITIALYSPEED (sin(M_PI/3)*MODULE - 1/2 * GRAVITY * YFRAMES*YFRAMES)/YFRAMES
@@ -189,13 +190,14 @@ void Worm::updateStep(void) {
 }
 
 void Worm::move(int initStepCount, int finalStepCount) {
+
 	/*If a move cycle ended (20 ticks/35ticks/50ticks), it resets counter. */
 	if (stepCountMove == finalStepCount) {
 		stepCountMove = initStepCount;
-		if (xPos < MAXX - 9 && direction == 1)
-			xPos += 9;
-		else if (xPos > MINX + 9 && direction == -1)
-			xPos -= 9;
+		if (xPos <= MAXX - MOVEMENT && direction == 1)
+			xPos += MOVEMENT;
+		else if (xPos >= MINX + MOVEMENT && direction == -1)
+			xPos -= MOVEMENT;
 		tempStepCountMove++;
 	}
 
