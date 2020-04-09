@@ -161,17 +161,16 @@ any worm's movement. If so, then it tells the worm to start the movement.*/
 bool Simulation::startMoving(int keyCode) {
 
 	int movementType;
-	for (int i = 0; i < wormCount; i++) {
-		movementType = wormVector[i]->checkKeyCode(keyCode);
-		if (movementType) {
-			//if(Simulation::timer(wormVector[i])){
+	if (keyCode == ALLEGRO_KEY_ESCAPE)
+		return false;
+	else{
+		for (int i = 0; i < wormCount; i++) {
+			movementType = wormVector[i]->checkKeyCode(keyCode);
+			if (movementType)
 				wormVector[i]->start(keyCode, movementType);
-				return true;
-			//}
 		}
 	}
-	return false;
-
+	return true;
 }
 /*If a key's been released, it checks if it's a key linked to
 any worm's movement. If so, then it tells the worm to stop the movement.*/
