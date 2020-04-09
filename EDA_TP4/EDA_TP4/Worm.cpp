@@ -149,7 +149,7 @@ void Worm::updateStep(void) {
 
 			/*Checks if worm is within allowed range.*/
 			xPos += MOVEMENT * direction;		
-			if (xPos > MAXX || xPos < MINX)
+			if (xPos > MAXX-39 || xPos < MINX-20)
 				xPos -= MOVEMENT * direction;
 			tempStepCountMove++;
 		}
