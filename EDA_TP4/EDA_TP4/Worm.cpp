@@ -149,46 +149,21 @@ void Worm::updateStep(void) {
 	/*If worm is moving horizontally...*/
 	if (isMoving) {
 
+		/*Sets stepCountMove in case it's moving to the right.*/
 		if (direction == 1 && !tempStepCountMove)
 			stepCountMove = XFRAMES;
 
-			/*If worm is still in first five ticks, it doesn't update stepCountMove.*/
+		/*If worm is still in first five ticks, it doesn't update stepCountMove.*/
 		if (tempStepCountMove < IDLEFRAMES)
 			tempStepCountMove++;
 		else
 			stepCountMove += -1*direction;
 
-		/*If a move cycle ended (20 ticks/35ticks/50ticks), it resets counter. */
-		if (direction == 1) {
-			if (stepCountMove == 0) {
-				stepCountMove = XFRAMES;
-				if (xPos<MAXX - 9)
-					xPos+= 9;
-				tempStepCountMove++;
-			}
-
-			/*After full cycle (50 ticks), it resets all flags.*/
-			if (tempStepCountMove == IDLEFRAMES + 3) {
-				isMoving = isMovePressed;
-				tempStepCountMove = 0;
-				stepCountMove = XFRAMES;
-			}
-		}
-		else {
-			if (stepCountMove == XFRAMES) {
-				stepCountMove = 0;
-				if (xPos > MINX + 9)
-					xPos -= 9;
-				tempStepCountMove++;
-			}
-
-			/*After full cycle (50 ticks), it resets all flags.*/
-			if (tempStepCountMove == IDLEFRAMES + 3) {
-				isMoving = isMovePressed;
-				tempStepCountMove = 0;
-				stepCountMove = 0;
-			}
-		}
+		if (direction == 1)
+			move(XFRAMES, 0);
+		
+		else 
+			move(0, XFRAMES);
 		
 	}
 
@@ -204,11 +179,30 @@ void Worm::updateStep(void) {
 
 		/*If worm has to move, then it updates xPos, yPos, ySpeed and stepCountJump. */
 		else {
-			xPos += direction * cos(M_PI / 3) * MODULE;
+			xPos += direction * cos(M_PI / 3) * MODULE/10;
 			yPos += ySpeed;
 			ySpeed -= GRAVITY;
 			stepCountJump++;
 		}
 
+	}
+}
+
+void Worm::move(int initStepCount, int finalStepCount) {
+	/*If a move cycle ended (20 ticks/35ticks/50ticks), it resets counter. */
+	if (stepCountMove == finalStepCount) {
+		stepCountMove = initStepCount;
+		if (xPos < MAXX - 9 && direction == 1)
+			xPos += 9;
+		else if (xPos > MINX + 9 && direction == -1)
+			xPos -= 9;
+		tempStepCountMove++;
+	}
+
+	/*After full cycle (50 ticks), it resets all flags.*/
+	if (tempStepCountMove == IDLEFRAMES + 3) {
+		isMoving = isMovePressed;
+		tempStepCountMove = 0;
+		stepCountMove = initStepCount;
 	}
 }

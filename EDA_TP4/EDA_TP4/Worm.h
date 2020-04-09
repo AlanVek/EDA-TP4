@@ -19,6 +19,8 @@ public:
 	int getStepJump(void);
 	void updateStep(void);
 
+	void move(int initStepCount, int finalStepCount);
+
 	bool getMovementState(void);
 	bool getJumpState(void);
 
