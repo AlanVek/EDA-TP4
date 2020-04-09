@@ -119,11 +119,6 @@ bool Simulation::setSimulation(bool displayCreation) {
 		result = false;
 	}
 
-	/*else if (!graphicControl->createBitmaps()) {
-		cout << "Failed to create bitmaps.\n";
-		result = false;
-	}*/
-
 	//Sets event source for timer, mouse, display and keyboard.
 	if (result) {
 		al_register_event_source(eventControl->getQueue(), al_get_timer_event_source(timeControl->getTimer()));

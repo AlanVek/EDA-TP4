@@ -44,6 +44,9 @@ bool EventClass::dispatch(void* thisSim) {
 		simPtr->refresh();
 		result = true;
 		break;
+	case ALLEGRO_EVENT_DISPLAY_CLOSE:
+		result = false;
+		break;
 	default:
 		//cout << ALLEGRO_EVENT_KEY_CHAR << endl;
 		break;
