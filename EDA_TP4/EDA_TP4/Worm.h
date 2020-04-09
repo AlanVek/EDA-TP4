@@ -1,6 +1,6 @@
 #pragma once
-#define CHANGEDIR 1
-#define STOPMOVING 2
+//#define CHANGEDIR 1
+//#define STOPMOVING 2
 #define MAXKEYS 4
 class Worm{
 public:

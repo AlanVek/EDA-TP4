@@ -9,8 +9,8 @@
 #define GRAVITY 0.24
 #define MINX 701
 #define MAXX 1212
-#define XFRAMES 15
-#define YFRAMES 10
+#define XFRAMES 14
+#define YFRAMES 9
 #define IDLEFRAMES 5
 #define MOVEMENT 9
 
@@ -172,7 +172,7 @@ void Worm::updateStep(void) {
 	else if (isJumping) {
 
 		/*If jump has finished, it resets stepCountMove and isJumping.*/
-		if (stepCountJump == 10) {
+		if (stepCountJump == YFRAMES) {
 			isJumping = isJumpPressed;
 			stepCountJump = 0;
 			ySpeed = INITIALYSPEED;
