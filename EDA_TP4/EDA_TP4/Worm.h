@@ -2,6 +2,8 @@
 //#define CHANGEDIR 1
 //#define STOPMOVING 2
 #define MAXKEYS 4
+#define XFRAMES 14
+#define YFRAMES 9
 class Worm{
 public:
 	Worm();
@@ -27,7 +29,7 @@ public:
 
 private:
 	bool isMoving, isJumping, isJumpPressed, isMovePressed;
-	int stepCountMove, stepCountJump, tempStepCountMove;
+	int stepCountMove, stepCountJump, tempStepCountMove, tempStepCountJump;
 	int jumpKey;
 	int moveKeys[MAXKEYS];
 	float xPos, yPos, ySpeed;

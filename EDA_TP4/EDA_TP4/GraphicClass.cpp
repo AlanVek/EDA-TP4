@@ -8,11 +8,11 @@ using namespace std;
 GraphicClass::GraphicClass(unsigned int width_, unsigned int height_) :
     width(width_), height(height_) {
     
-    for (int i = 0; i < BITAMOUNT; i++)
+    for (int i = 0; i < (XFRAMES + 1); i++)
         moveBitmaps[i] = nullptr;
 
     
-    for (int i = 0; i < BITAMOUNT2; i++)
+    for (int i = 0; i < (YFRAMES + 1); i++)
        jumpBitmaps[i] = nullptr;
 
     display = nullptr;
@@ -24,12 +24,12 @@ GraphicClass::GraphicClass(unsigned int width_, unsigned int height_) :
 bool GraphicClass::createBitmaps(void) {
     bool result = true;
 
-    for (int i = 0; i < BITAMOUNT; i++) {
+    for (int i = 0; i < (XFRAMES + 1); i++) {
         if (!(moveBitmaps[i] = al_create_bitmap(width, height)))
             result = false;
     }
 
-    for (int i = 0; i < BITAMOUNT2; i++) {
+    for (int i = 0; i < (YFRAMES + 1); i++) {
         if (!(jumpBitmaps[i] = al_create_bitmap(width, height)))
             result = false;
     }
@@ -51,12 +51,12 @@ ALLEGRO_DISPLAY*& GraphicClass::getDisplay(void) { return display; }
 //Frees memory.
 GraphicClass::~GraphicClass(void) {
     
-    for (int i = 0; i < BITAMOUNT; i++) {
+    for (int i = 0; i < (XFRAMES + 1); i++) {
         if (moveBitmaps[i])
             al_destroy_bitmap(moveBitmaps[i]);
     }
 
-    for (int i = 0; i < BITAMOUNT2; i++) {
+    for (int i = 0; i < (YFRAMES + 1); i++) {
         if (jumpBitmaps[i])
             al_destroy_bitmap(jumpBitmaps[i]);
     }
@@ -87,9 +87,11 @@ void GraphicClass::draw(void* whichWorm) {
     else if (wormPtr->getJumpState()) {
         state = wormPtr->getStepJump();
         temp = jumpBitmaps[state];
+        cout << state << endl;
     }
     else
-        temp = moveBitmaps[0];
+        //Idle image is the 4th.
+        temp = moveBitmaps[3];
 
     if (wormPtr->getDirection()==1)
         al_draw_bitmap(temp, wormPtr->getXPos(), wormPtr->getYPos(), ALLEGRO_FLIP_HORIZONTAL);
@@ -110,7 +112,7 @@ bool GraphicClass::loadBitmaps(void) {
     if (!tempchar)
         return false;
    
-    for (int i = 0; i < BITAMOUNT; i++) {
+    for (int i = 0; i < (XFRAMES + 1); i++) {
         
         tempstr = name + to_string(i+1) + ".png";
         
@@ -125,7 +127,7 @@ bool GraphicClass::loadBitmaps(void) {
 
     name = "wjump-F";
 
-    for (int i = 0; i < BITAMOUNT2; i++) {
+    for (int i = 0; i < (YFRAMES + 1); i++) {
         tempstr = name + to_string(i + 1) + ".png";
 
         tempchar = strcpy(tempchar, tempstr.c_str());

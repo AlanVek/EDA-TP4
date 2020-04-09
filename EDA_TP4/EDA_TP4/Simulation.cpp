@@ -149,6 +149,7 @@ Simulation::~Simulation() {
 //Communicates "outside world" with EventClass' dispatcher.
 bool Simulation::dispatch(void) {
 	return (eventControl->dispatch(this));
+	
 }
 
 /* When a key gets pressed, it checks if it's a key linked to

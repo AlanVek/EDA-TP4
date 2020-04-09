@@ -1,10 +1,7 @@
 #pragma once
 #include <iostream>
 #include <allegro5/allegro.h>
-
-#define BITAMOUNT 15
-#define BITAMOUNT2 10
-
+#define MAXBITS 15
 class GraphicClass {
 public:
 
@@ -27,8 +24,8 @@ public:
 
 private:
 
-	ALLEGRO_BITMAP* moveBitmaps[BITAMOUNT];
-	ALLEGRO_BITMAP* jumpBitmaps[BITAMOUNT2];
+	ALLEGRO_BITMAP* moveBitmaps[MAXBITS];
+	ALLEGRO_BITMAP* jumpBitmaps[MAXBITS];
 	ALLEGRO_BITMAP* background;
 	ALLEGRO_DISPLAY* display;
 	unsigned int width, height;
