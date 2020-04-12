@@ -6,19 +6,16 @@ using namespace std;
 
 bool setAllegro(void);
 
-
 //Simulation constructor.
 Simulation::Simulation(unsigned int width_, unsigned int height_, double FPS_, int wormCount_) :
 
-	width (width_), height(height_), FPS(FPS_), wormCount(wormCount_){
-
+	width(width_), height(height_), FPS(FPS_), wormCount(wormCount_) {
 	graphicControl = nullptr;
 	timeControl = nullptr;
 	eventControl = nullptr;
 
 	for (int i = 0; i < wormCount; i++)
 		wormVector[i] = nullptr;
-
 }
 
 bool Simulation::initializeAll(void) {
@@ -35,7 +32,7 @@ bool Simulation::initializeAll(void) {
 	else if (!setSimulation(true)) {
 		cout << "Failed to set simulation.\n";
 		result = false;
-	}	
+	}
 
 	//Attempts to initialize worms.
 	else if (!initializeWorms()) {
@@ -76,17 +73,16 @@ bool setAllegro(void) {
 }
 
 /*Creates needed resources and checks for initialization errors.
-If there's been one, returns false. If not, returns true. 
+If there's been one, returns false. If not, returns true.
 If displayCreation is true, it creates a new display.*/
 bool Simulation::setSimulation(bool displayCreation) {
-
 	bool result = true;
 
 	//Creates control variables and checks for proper initialization.
 	graphicControl = new (nothrow) GraphicClass(width, height);
 	eventControl = new (nothrow) EventClass();
 	timeControl = new (nothrow) TimeClass();
-	
+
 	if (!graphicControl) {
 		cout << "Failed to create graphic pointer\n";
 		result = false;
@@ -95,7 +91,7 @@ bool Simulation::setSimulation(bool displayCreation) {
 		cout << "Failed to create event pointer\n";
 		result = false;
 	}
-	
+
 	else if (!timeControl) {
 		cout << "Failed to create time pointer\n";
 		result = false;
@@ -133,11 +129,10 @@ bool Simulation::setSimulation(bool displayCreation) {
 //Class getters.
 GraphicClass* Simulation::getGraphicControl(void) { return graphicControl; }
 TimeClass* Simulation::getTimeControl(void) { return timeControl; }
-EventClass* Simulation::getEventControl(void) {return eventControl;}
+EventClass* Simulation::getEventControl(void) { return eventControl; }
 
 //Destructor. Frees memory.
 Simulation::~Simulation() {
-	
 	if (graphicControl)
 		delete graphicControl;
 	if (timeControl)
@@ -154,17 +149,15 @@ Simulation::~Simulation() {
 //Communicates "outside world" with EventClass' dispatcher.
 bool Simulation::dispatch(void) {
 	return (eventControl->dispatch(this));
-	
 }
 
 /* When a key is pressed, it checks whether it's a key linked to
 any worm's movement. If so, then it tells the worm to start the movement.*/
 bool Simulation::startMoving(int keyCode) {
-
 	int movementType;
 	if (keyCode == ALLEGRO_KEY_ESCAPE)
 		return false;
-	else{
+	else {
 		for (int i = 0; i < wormCount; i++) {
 			movementType = wormVector[i]->checkKeyCode(keyCode);
 			if (movementType)
@@ -193,7 +186,7 @@ void Simulation::refresh(void) {
 	graphicControl->drawBackground();
 	for (int i = 0; i < wormCount; i++) {
 		graphicControl->draw(wormVector[i]);
-		wormVector[i]->updateStep();		
+		wormVector[i]->updateStep();
 	}
 	al_flip_display();
 }
@@ -208,18 +201,17 @@ bool Simulation::initializeWorms(void) {
 			wormCount = i;
 		}
 	}
-
 	return result;
 }
 
 //Sets default key values.
 void Simulation::setDefaultKeys(void) {
-	int moveKeys1[] = { ALLEGRO_KEY_LEFT, ALLEGRO_KEY_RIGHT};
-	int moveKeys2[] = { ALLEGRO_KEY_A, ALLEGRO_KEY_D};
-	
+	int moveKeys1[] = { ALLEGRO_KEY_LEFT, ALLEGRO_KEY_RIGHT };
+	int moveKeys2[] = { ALLEGRO_KEY_A, ALLEGRO_KEY_D };
+
 	wormVector[0]->setJumpKey(ALLEGRO_KEY_UP);
-	wormVector[0]->setMoveKeys(moveKeys1,2);
+	wormVector[0]->setMoveKeys(moveKeys1, 2);
 
 	wormVector[1]->setJumpKey(ALLEGRO_KEY_W);
-	wormVector[1]->setMoveKeys(moveKeys2,2);
+	wormVector[1]->setMoveKeys(moveKeys2, 2);
 }

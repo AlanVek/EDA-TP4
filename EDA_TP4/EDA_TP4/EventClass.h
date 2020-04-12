@@ -5,7 +5,7 @@ class EventClass {
 public:
 	EventClass(ALLEGRO_EVENT_QUEUE* Queue_ = nullptr);
 	bool createEventQueue(void);
-	
+
 	int getNextEventType();
 	ALLEGRO_EVENT_QUEUE* getQueue(void);
 	~EventClass();
@@ -17,4 +17,3 @@ private:
 	ALLEGRO_EVENT Event;
 	ALLEGRO_EVENT_QUEUE* Queue;
 };
-

@@ -29,6 +29,4 @@ private:
 	ALLEGRO_BITMAP* background;
 	ALLEGRO_DISPLAY* display;
 	unsigned int width, height;
-	
 };
-

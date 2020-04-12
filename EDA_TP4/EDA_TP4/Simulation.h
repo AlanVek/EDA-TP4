@@ -52,7 +52,7 @@ private:
 	Worm* wormVector[MAXWORMS];
 
 	int wormCount;
-		
+
 	unsigned int width, height;
 	double FPS;
 };

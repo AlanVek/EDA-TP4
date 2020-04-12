@@ -4,7 +4,7 @@
 class TimeClass {
 public:
 	TimeClass(ALLEGRO_TIMER* timer_ = nullptr);
-	
+
 	void startTimer(void);
 	bool createTimer(double FPS_);
 	ALLEGRO_TIMER* getTimer(void);
@@ -14,4 +14,3 @@ public:
 private:
 	ALLEGRO_TIMER* Timer;
 };
-

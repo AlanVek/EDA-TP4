@@ -4,7 +4,6 @@
 using namespace std;
 
 int main() {
-
 	Simulation mySim;
 	int result = 0;
 	bool endOfInput = false;
@@ -20,7 +19,6 @@ int main() {
 
 	//If everything was initialized correctly...
 	if (!endOfInput) {
-
 		//Starts timer.
 		mySim.getTimeControl()->startTimer();
 
@@ -32,7 +30,6 @@ int main() {
 			}
 		}
 	}
-
 
 	return result;
 }

@@ -2,7 +2,7 @@
 #include "Simulation.h"
 EventClass::EventClass(ALLEGRO_EVENT_QUEUE* Queue_) : Queue(Queue_) {};
 
-//Attempts to create Allegro event queue. Returns false if unsuccessful. 
+//Attempts to create Allegro event queue. Returns false if unsuccessful.
 bool EventClass::createEventQueue() { return (Queue = al_create_event_queue()); }
 
 //Class getters.
@@ -19,13 +19,13 @@ int EventClass::getNextEventType() {
 
 //Frees memory.
 EventClass::~EventClass() {
-	if (Queue) 
+	if (Queue)
 		al_destroy_event_queue(Queue);
 }
 
 //Talks different courses of action according to event input.
 bool EventClass::dispatch(void* thisSim) {
-	Simulation* simPtr = (Simulation*) thisSim;
+	Simulation* simPtr = (Simulation*)thisSim;
 	bool result = false;
 
 	switch (Event.type) {
@@ -53,5 +53,3 @@ bool EventClass::dispatch(void* thisSim) {
 
 	return result;
 }
-
-

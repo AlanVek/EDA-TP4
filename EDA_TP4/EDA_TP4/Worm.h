@@ -3,14 +3,14 @@
 #define MAXKEYS 4
 #define XFRAMES 14
 #define YFRAMES 9
-class Worm{
+class Worm {
 public:
 	Worm();
 
 	void setJumpKey(int validEvent_);
 	void setMoveKeys(const int* validEvents_, int amount);
 
-	int checkKeyCode (int keyCode);
+	int checkKeyCode(int keyCode);
 
 	void stop(int keyCode, int whichMove);
 
@@ -34,4 +34,3 @@ private:
 	float xPos, yPos, ySpeed;
 	int direction;
 };
-

@@ -36,7 +36,7 @@ Worm::Worm() {
 
 	xPos = rand() % (MAXX - MINX + 1) + MINX;
 	yPos = STARTINGY;
-	ySpeed = INITIALYSPEED ;
+	ySpeed = INITIALYSPEED;
 
 	jumpKey = NULL;
 	for (int i = 0; i < MAXKEYS; i++)
@@ -73,7 +73,6 @@ int Worm::checkKeyCode(int keyCode) {
 /*Sets isMoving/isJumping to true (if user pressed to move or jump,
 respectively). */
 void Worm::start(int keyCode, int whichMove) {
-
 	/*If user pressed moving key...*/
 	if (whichMove == -1) {
 		if (!isJumping && !isMoving) {
@@ -101,16 +100,13 @@ void Worm::start(int keyCode, int whichMove) {
 
 /*Sets corresponding key state to false.*/
 void Worm::stop(int keyCode, int whichMove) {
-
 	/*If moving key was released...*/
 	if (whichMove == -1) {
-
 		/*Sets key state to false.*/
 		isMovePressed = false;
 
 		/*If the 100ms hadn't elapsed...*/
-		if (tempStepCountMove< CHECKINGFRAMES) {
-
+		if (tempStepCountMove < CHECKINGFRAMES) {
 			/*The worm isn't moving, so it resets isMoving and stepCount Move.
 			The worm's direction changes to its opposite.*/
 			isMoving = false;
@@ -129,18 +125,15 @@ bool Worm::getMovementState(void) { return isMoving; }
 bool Worm::getJumpState(void) { return isJumping; }
 int Worm::getDirection() { return direction; }
 
-
-/*If the worm was moving/jumping, it updates the corresponding stepCount 
+/*If the worm was moving/jumping, it updates the corresponding stepCount
 and returns true. Otherwise, it returns false.*/
 void Worm::updateStep(void) {
-
 	/*If worm is moving horizontally...*/
 	if (isMoving) {
-
 		/*If worm is still in first five ticks + 3 warm-up, it doesn't update stepCountMove.*/
 		if (tempStepCountMove < IDLEFRAMES)
 			tempStepCountMove++;
-		
+
 		/*Afterwards, stepCountMove is updated every tick.*/
 		else
 			stepCountMove++;
@@ -151,7 +144,7 @@ void Worm::updateStep(void) {
 			stepCountMove = WARMUPFRAMES;
 
 			/*Checks if worm is within allowed range.*/
-			xPos += MOVEMENT * direction;		
+			xPos += MOVEMENT * direction;
 			if (xPos > MAXX + RIGHT_SIDE_OFFSET || xPos < MINX + LEFT_SIDE_OFFSET)
 				xPos -= MOVEMENT * direction;
 			tempStepCountMove++;
@@ -168,7 +161,6 @@ void Worm::updateStep(void) {
 
 	/*If worm is jumping...*/
 	else if (isJumping) {
-
 		tickTemp++;
 
 		/*Until the 4th image, the position doesn't change.
@@ -179,11 +171,10 @@ void Worm::updateStep(void) {
 		}
 
 		//Then, there are approximately 34 more cycles of position change.
-		else if (tickTemp <= ((IDLEFRAMES + FALLFRAMES+2))) {
-
+		else if (tickTemp <= ((IDLEFRAMES + FALLFRAMES + 2))) {
 			/*Updates position, checking and correcting if it's gone out of range.*/
 			xPos += direction * cos(ANGLE) * MODULE;
-			
+
 			if (xPos > MAXX + RIGHT_SIDE_OFFSET || xPos < MINX + LEFT_SIDE_OFFSET)
 				xPos -= direction * cos(ANGLE) * MODULE;
 
@@ -193,19 +184,18 @@ void Worm::updateStep(void) {
 			ySpeed += GRAVITY;
 		}
 		//After the fall, the image is updated every 2 frames.
-		else if (tickTemp<=FPS){
+		else if (tickTemp <= FPS) {
 			if (tickTemp % 2)
 				stepCountJump++;
 		}
 
 		/*After the full 50 frames, everything goes back to original values. */
-		else{
+		else {
 			isJumping = isJumpPressed;
 			yPos = STARTINGY;
 			ySpeed = INITIALYSPEED;
 			tickTemp = 0;
 			stepCountJump = 0;
 		}
-
 	}
 }
