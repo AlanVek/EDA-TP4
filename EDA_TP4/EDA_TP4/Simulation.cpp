@@ -157,7 +157,7 @@ bool Simulation::dispatch(void) {
 	
 }
 
-/* When a key gets pressed, it checks if it's a key linked to
+/* When a key is pressed, it checks whether it's a key linked to
 any worm's movement. If so, then it tells the worm to start the movement.*/
 bool Simulation::startMoving(int keyCode) {
 
@@ -173,7 +173,7 @@ bool Simulation::startMoving(int keyCode) {
 	}
 	return true;
 }
-/*If a key's been released, it checks if it's a key linked to
+/*If a key's been released, it checks whether it's a key linked to
 any worm's movement. If so, then it tells the worm to stop the movement.*/
 void Simulation::stopMoving(int keyCode) {
 	int whichMove;
@@ -199,7 +199,7 @@ void Simulation::refresh(void) {
 }
 
 /*Creates wormCount worms in memory and stores them in wormVector.
-Returns false if there's been an allocation error.*/
+Returns false if there's been a memory allocation error.*/
 bool Simulation::initializeWorms(void) {
 	bool result = true;
 	for (int i = 0; i < wormCount; i++) {

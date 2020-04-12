@@ -8,11 +8,13 @@
 #define MODULE 4.5
 #define GRAVITY 0.24
 #define MINX 701
+#define MAXX 1212
 #define LEFT_SIDE_OFFSET -20
 #define RIGHT_SIDE_OFFSET -39
-#define MAXX 1212
-#define IDLEFRAMES 8.0
+#define WARMUPFRAMES 3
+#define LAPS 3
 #define CHECKINGFRAMES 5
+#define IDLEFRAMES (WARMUPFRAMES + CHECKINGFRAMES)
 #define MOVEMENT 9
 #define ANGLE M_PI/3
 #define INITIALYSPEED -sin(ANGLE)*MODULE
@@ -26,12 +28,11 @@ Worm::Worm() {
 	isMoving = false;
 	isJumping = false;
 	isJumpPressed = false;
-	//timer = 0;
 
 	stepCountMove = 0;
 	stepCountJump = 0;
 	tempStepCountMove = 0;
-	tempStepCountJump = 0;
+	tickTemp = 0;
 
 	xPos = rand() % (MAXX - MINX + 1) + MINX;
 	yPos = STARTINGY;
@@ -144,10 +145,10 @@ void Worm::updateStep(void) {
 		else
 			stepCountMove++;
 
-		/*Once stepCountMove reached limit, it's reset (without the 3 warm-up).
+		/*Once stepCountMove reached limit, it's reset (without the warm-up).
 		Also, worm's position is updated.*/
 		if (stepCountMove == XFRAMES) {
-			stepCountMove = 3;
+			stepCountMove = WARMUPFRAMES;
 
 			/*Checks if worm is within allowed range.*/
 			xPos += MOVEMENT * direction;		
@@ -157,7 +158,7 @@ void Worm::updateStep(void) {
 		}
 
 		/*After full cycle (50 ticks), it resets all flags.*/
-		if (tempStepCountMove == IDLEFRAMES + 3) {
+		if (tempStepCountMove == IDLEFRAMES + LAPS) {
 			isMoving = isMovePressed;
 			tempStepCountMove = 0;
 			stepCountMove = 0;
@@ -168,17 +169,17 @@ void Worm::updateStep(void) {
 	/*If worm is jumping...*/
 	else if (isJumping) {
 
-		tempStepCountJump++;
+		tickTemp++;
 
 		/*Until the 4th image, the position doesn't change.
 		The image is updated every 2 frames. */
-		if (tempStepCountJump <= IDLEFRAMES) {
-			if (!(tempStepCountJump % 2))
+		if (tickTemp <= IDLEFRAMES) {
+			if (!(tickTemp % 2))
 				stepCountJump++;
 		}
 
 		//Then, there are approximately 34 more cycles of position change.
-		else if (tempStepCountJump <= ((IDLEFRAMES + FALLFRAMES+2))) {
+		else if (tickTemp <= ((IDLEFRAMES + FALLFRAMES+2))) {
 
 			/*Updates position, checking and correcting if it's gone out of range.*/
 			xPos += direction * cos(ANGLE) * MODULE;
@@ -192,8 +193,8 @@ void Worm::updateStep(void) {
 			ySpeed += GRAVITY;
 		}
 		//After the fall, the image is updated every 2 frames.
-		else if (tempStepCountJump<=FPS){
-			if (tempStepCountJump % 2)
+		else if (tickTemp<=FPS){
+			if (tickTemp % 2)
 				stepCountJump++;
 		}
 
@@ -202,7 +203,7 @@ void Worm::updateStep(void) {
 			isJumping = isJumpPressed;
 			yPos = STARTINGY;
 			ySpeed = INITIALYSPEED;
-			tempStepCountJump = 0;
+			tickTemp = 0;
 			stepCountJump = 0;
 		}
 

@@ -74,24 +74,28 @@ void GraphicClass::draw(void* whichWorm) {
     Worm* wormPtr = (Worm*)whichWorm;
     ALLEGRO_BITMAP* temp = nullptr;
     
-    /*State is 0 by default (idle worm state).*/
-    int state = 0;
+    /*State is 3 by default (idle worm state).*/
+    int state = 3;
 
-    /*If worm is moving, it gets the movement step.*/
-    if (wormPtr->getMovementState()) {
-        state = wormPtr->getStepMove();
-        temp = moveBitmaps[state];
-    }
-
-    /*If worm is jumping, it gets the jumping step.*/
-    else if (wormPtr->getJumpState()) {
+   
+    /*If worm is jumping, it gets the jumping step and loads jumping image.*/
+   if (wormPtr->getJumpState()) {
         state = wormPtr->getStepJump();
         temp = jumpBitmaps[state];
     }
-    else
-        //Idle image is the 4th.
-        temp = moveBitmaps[3];
+   else {
+       /*If worm is moving, it gets the movement step.*/
+       if (wormPtr->getMovementState()) {
+           state = wormPtr->getStepMove();
+           temp = moveBitmaps[state];
+       }
 
+       /*Loads image (either moving image or idle image. */
+       temp = moveBitmaps[state];
+   }
+
+
+   //Draws bitmap (either the real one or mirrored, depending on the worm's direction.
     if (wormPtr->getDirection()==1)
         al_draw_bitmap(temp, wormPtr->getXPos(), wormPtr->getYPos(), ALLEGRO_FLIP_HORIZONTAL);
     else
@@ -141,8 +145,4 @@ bool GraphicClass::loadBitmaps(void) {
 
 }
 
-void GraphicClass::drawBackground(void) {
-
-    al_draw_bitmap(background, 0, 0, 0);
-
-}
+void GraphicClass::drawBackground(void) { al_draw_bitmap(background, 0, 0, 0); }

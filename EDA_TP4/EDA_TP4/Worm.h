@@ -1,6 +1,5 @@
 #pragma once
-//#define CHANGEDIR 1
-//#define STOPMOVING 2
+
 #define MAXKEYS 4
 #define XFRAMES 14
 #define YFRAMES 9
@@ -29,7 +28,7 @@ public:
 
 private:
 	bool isMoving, isJumping, isJumpPressed, isMovePressed;
-	int stepCountMove, stepCountJump, tempStepCountMove, tempStepCountJump;
+	int stepCountMove, stepCountJump, tempStepCountMove, tickTemp;
 	int jumpKey;
 	int moveKeys[MAXKEYS];
 	float xPos, yPos, ySpeed;
