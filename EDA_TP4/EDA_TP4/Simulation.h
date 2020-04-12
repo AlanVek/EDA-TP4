@@ -19,7 +19,8 @@ class Simulation {
 public:
 
 	//Simulation constructor.
-	Simulation(unsigned int width_ = defaultWidth, unsigned int height_ = defaultHeight, double FPS_ = defaultFPS, int wormCount_ = MAXWORMS);
+	Simulation(unsigned int width_ = defaultWidth, unsigned int height_ = defaultHeight, double FPS_ = defaultFPS,
+		int wormCount_ = MAXWORMS);
 
 	GraphicClass* getGraphicControl(void);
 	TimeClass* getTimeControl(void);
@@ -32,14 +33,11 @@ public:
 
 	bool startMoving(int keyCode);
 
-	bool timer(Worm * wrmptr);
-
 	void stopMoving(int keyCode);
 
 	void refresh(void);
 
 	bool dispatch(void);
-	int keyUp(Worm* wormptr);
 
 	bool initializeWorms(void);
 	~Simulation();

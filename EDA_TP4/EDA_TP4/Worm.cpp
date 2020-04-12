@@ -161,6 +161,7 @@ void Worm::updateStep(void) {
 			isMoving = isMovePressed;
 			tempStepCountMove = 0;
 			stepCountMove = 0;
+			cout << xPos << endl;
 		}
 	}
 

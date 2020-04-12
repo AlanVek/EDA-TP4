@@ -48,7 +48,6 @@ bool EventClass::dispatch(void* thisSim) {
 		result = false;
 		break;
 	default:
-		//cout << ALLEGRO_EVENT_KEY_CHAR << endl;
 		break;
 	}
 

@@ -15,17 +15,23 @@ int main() {
 	if (!mySim.initializeAll()) {
 		cout << "Failed to initialize simulation.\n";
 		result = -1;
+		endOfInput = true;
 	}
 
-	mySim.getTimeControl()->startTimer();
+	//If everything was initialized correctly...
+	if (!endOfInput) {
 
-	while (!endOfInput) {
-		if (mySim.getEventControl()->getNextEventType()) {
-			if (!mySim.dispatch())
-				endOfInput = true;
+		//Starts timer.
+		mySim.getTimeControl()->startTimer();
+
+		//Game loop.
+		while (!endOfInput) {
+			if (mySim.getEventControl()->getNextEventType()) {
+				if (!mySim.dispatch())
+					endOfInput = true;
+			}
 		}
 	}
-
 
 
 	return result;

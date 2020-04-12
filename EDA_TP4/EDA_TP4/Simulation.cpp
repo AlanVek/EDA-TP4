@@ -138,12 +138,17 @@ EventClass* Simulation::getEventControl(void) {return eventControl;}
 //Destructor. Frees memory.
 Simulation::~Simulation() {
 	
-	delete graphicControl;
-	delete timeControl;
-	delete eventControl;
+	if (graphicControl)
+		delete graphicControl;
+	if (timeControl)
+		delete timeControl;
+	if (eventControl)
+		delete eventControl;
 
-	for (int i = 0; i < wormCount; i++)
-		delete wormVector[i];
+	for (int i = 0; i < wormCount; i++) {
+		if (wormVector[i])
+			delete wormVector[i];
+	}
 }
 
 //Communicates "outside world" with EventClass' dispatcher.
