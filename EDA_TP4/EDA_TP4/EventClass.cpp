@@ -11,10 +11,10 @@ ALLEGRO_EVENT EventClass::getEvent(void) { return Event; }
 
 //Returns the type of the next event in the queue, or NULL if queue is empty.
 int EventClass::getNextEventType() {
+	int result = NULL;
 	if (al_get_next_event(Queue, &Event))
-		return Event.type;
-	else
-		return NULL;
+		result = Event.type;
+	return result;
 }
 
 //Frees memory.

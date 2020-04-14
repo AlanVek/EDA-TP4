@@ -34,7 +34,7 @@ Worm::Worm() {
 	tempStepCountMove = 0;
 	tickTemp = 0;
 
-	xPos = rand() % (MAXX - MINX + 1) + MINX;
+	xPos = rand() % ((MAXX + RIGHT_SIDE_OFFSET) - (MINX - LEFT_SIDE_OFFSET) + 1) + (MINX - LEFT_SIDE_OFFSET);
 	yPos = STARTINGY;
 	ySpeed = INITIALYSPEED;
 
@@ -59,15 +59,16 @@ void Worm::setMoveKeys(const int* validEvents_, int amount) {
 If it's jumping, it returns 1. If it's moving, it returns -1.
 If it's neither, it returns 0.*/
 int Worm::checkKeyCode(int keyCode) {
+	int result = 0;
 	if (keyCode == jumpKey)
-		return 1;
+		result = 1;
 
 	for (int i = 0; i < MAXKEYS; i++) {
 		if (moveKeys[i] == keyCode)
-			return -1;
+			result = -1;
 	}
 
-	return 0;
+	return result;
 }
 
 /*Sets isMoving/isJumping to true (if user pressed to move or jump,
@@ -110,6 +111,7 @@ void Worm::stop(int keyCode, int whichMove) {
 			/*The worm isn't moving, so it resets isMoving and stepCount Move.
 			The worm's direction changes to its opposite.*/
 			isMoving = false;
+			tempStepCountMove = 0;
 		}
 	}
 	else
