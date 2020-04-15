@@ -8,8 +8,8 @@ bool setAllegro(void);
 
 //Simulation constructor.
 Simulation::Simulation(unsigned int width_, unsigned int height_, double FPS_, int wormCount_) :
-
-	width(width_), height(height_), FPS(FPS_), wormCount(wormCount_) {
+	width(width_), height(height_), FPS(FPS_), wormCount(wormCount_)
+{
 	graphicControl = nullptr;
 	timeControl = nullptr;
 	eventControl = nullptr;

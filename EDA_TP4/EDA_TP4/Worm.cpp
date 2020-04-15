@@ -20,6 +20,10 @@
 #define INITIALYSPEED -sin(ANGLE)*MODULE
 #define FALLFRAMES ((-1*INITIALYSPEED)/(0.5*GRAVITY))
 #define FPS 50.0
+#define RIGHTDIRECTION 1
+#define LEFTDIRECTION -1
+#define JUMP 1
+#define MOVE -1
 
 using namespace std;
 
@@ -29,10 +33,10 @@ Worm::Worm() {
 	isJumping = false;
 	isJumpPressed = false;
 
-	stepCountMove = 0;
-	stepCountJump = 0;
-	tempStepCountMove = 0;
-	tickTemp = 0;
+	stepCountMove = NULL;
+	stepCountJump = NULL;
+	tempStepCountMove = NULL;
+	tickTemp = NULL;
 
 	xPos = rand() % ((MAXX + RIGHT_SIDE_OFFSET) - (MINX - LEFT_SIDE_OFFSET) + 1) + (MINX - LEFT_SIDE_OFFSET);
 	yPos = STARTINGY;
@@ -42,7 +46,7 @@ Worm::Worm() {
 	for (int i = 0; i < MAXKEYS; i++)
 		moveKeys[i] = NULL;
 
-	direction = 1;
+	direction = RIGHTDIRECTION;
 };
 
 /* Recieves a key and sets it to jumping key.*/
@@ -59,13 +63,13 @@ void Worm::setMoveKeys(const int* validEvents_, int amount) {
 If it's jumping, it returns 1. If it's moving, it returns -1.
 If it's neither, it returns 0.*/
 int Worm::checkKeyCode(int keyCode) {
-	int result = 0;
+	int result = NULL;
 	if (keyCode == jumpKey)
-		result = 1;
+		result = JUMP;
 
 	for (int i = 0; i < MAXKEYS; i++) {
 		if (moveKeys[i] == keyCode)
-			result = -1;
+			result = MOVE;
 	}
 
 	return result;
@@ -75,17 +79,17 @@ int Worm::checkKeyCode(int keyCode) {
 respectively). */
 void Worm::start(int keyCode, int whichMove) {
 	/*If user pressed moving key...*/
-	if (whichMove == -1) {
+	if (whichMove == MOVE) {
 		if (!isJumping && !isMoving) {
 			isMoving = true;
 			isMovePressed = true;
 			/*If it's to the left, direction = -1. Otherwise, direction = 1.*/
 			if (keyCode == *moveKeys)
-				direction = -1;
+				direction = LEFTDIRECTION;
 			else {
-				direction = 1;
+				direction = RIGHTDIRECTION;
 			}
-			stepCountMove = 0;
+			stepCountMove = NULL;
 		}
 	}
 
@@ -102,7 +106,7 @@ void Worm::start(int keyCode, int whichMove) {
 /*Sets corresponding key state to false.*/
 void Worm::stop(int keyCode, int whichMove) {
 	/*If moving key was released...*/
-	if (whichMove == -1) {
+	if (whichMove == MOVE) {
 		/*Sets key state to false.*/
 		isMovePressed = false;
 
@@ -111,7 +115,7 @@ void Worm::stop(int keyCode, int whichMove) {
 			/*The worm isn't moving, so it resets isMoving and stepCount Move.
 			The worm's direction changes to its opposite.*/
 			isMoving = false;
-			tempStepCountMove = 0;
+			tempStepCountMove = NULL;
 		}
 	}
 	else
@@ -155,8 +159,8 @@ void Worm::updateStep(void) {
 		/*After full cycle (50 ticks), it resets all flags.*/
 		if (tempStepCountMove == IDLEFRAMES + LAPS) {
 			isMoving = isMovePressed;
-			tempStepCountMove = 0;
-			stepCountMove = 0;
+			tempStepCountMove = NULL;
+			stepCountMove = NULL;
 			cout << xPos << endl;
 		}
 	}
@@ -196,8 +200,8 @@ void Worm::updateStep(void) {
 			isJumping = isJumpPressed;
 			yPos = STARTINGY;
 			ySpeed = INITIALYSPEED;
-			tickTemp = 0;
-			stepCountJump = 0;
+			tickTemp = NULL;
+			stepCountJump = NULL;
 		}
 	}
 }
